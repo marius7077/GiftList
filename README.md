@@ -1,4 +1,4 @@
-# Room'IT
+# Book'IT
 
 *Comment obtimiser la réservation de salle au sein de l'IUT ?*
 
