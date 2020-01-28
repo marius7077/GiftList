@@ -91,3 +91,14 @@ Pour réserver, il faut spécifier un horaire et une durée. On demande en plus 
  * Réservation effectuée avec succès !
 */
 ```
+
+## Lot 4
+### Connexion à l'application
+Pour réserver une salle, il est nécessaire de s'identifier. Pour cela, on renseignera simplement son identifiant suivi de son mot de passe. 
+La déconnexion se fait ensuite au moyen d'un simple mot cle.
+```
+> connect ii00000 my_password
+/* l'utilisateur ii00000 est connecté */
+> disconnect
+/* l'utilisateur se déconnecte */
+```
