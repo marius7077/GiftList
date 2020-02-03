@@ -29,11 +29,11 @@ La recheche d'une salle s'effecturera par filtres. Sans filtres renseignés, la 
 ```JAVA
 > l_room
 /* affiche la liste des salles accessibles à l'heure de la commande */
-> look_for_room -fi
+> look_room -fi
 /* affiche la liste des salles informatiques (i) fermées (f) */
-> look_for_room -hdin 2020-01-28_15:30 210 20
+> look_room -hdin 2020-01-28_15:30 210 20
 /* affiche la liste des salles informatiques accessibles le 28 Janvier 2020 à 15h30 pour une durée de 210 minutes (3 heures trente) et pour 20 personnes */
-> look_for_room -a
+> look_room -a
 /* affiche toutes les salles, quelles que soient leurs disponibilité */
 
 /**
@@ -88,7 +88,7 @@ Après consultation, il faut bien sûr passer par l'étape de réservation. Il e
 Pour réserver, il faut spécifier un horaire et une durée. On demande en plus un commentaire, permettant lors de la consultation d'une salle de connaître l'utilisation qui en est faite.
 
 ```JAVA
-> take_room B2-20 2020-01-28_14:00 120
+> book_room B2-20 2020-01-28_14:00 120
 /* réserve la salle B2-20 de 14h à 16h le 28 Janvier 2020, pour un cours de mathématiques. */
 > motif : cours de mathématiques
 /* après "motif :" qui s'est affiché automatiquement, on renseigne la raison de la réservation */
