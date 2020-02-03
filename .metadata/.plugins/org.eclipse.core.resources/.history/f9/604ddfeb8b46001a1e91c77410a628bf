@@ -1,0 +1,14 @@
+package client;
+
+import java.util.Scanner;
+
+public class AppConsole {
+
+	public AppConsole(Scanner sc) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public void start() {
+		System.out.print(">");		
+	}
+}

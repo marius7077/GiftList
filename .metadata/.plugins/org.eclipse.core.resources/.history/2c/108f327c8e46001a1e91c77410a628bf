@@ -1,0 +1,20 @@
+package client;
+
+public class RoomManager {
+
+	public void look() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void book() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void see() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

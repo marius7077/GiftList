@@ -1,0 +1,16 @@
+package client;
+
+import java.io.InputStream;
+import java.util.Scanner;
+
+public class AppConsole {
+	Scanner sc;
+
+	public AppConsole(InputStream input) {
+		sc = new Scanner(input);	
+	}
+
+	public void start() {
+		System.out.print(">");		
+	}
+}
