@@ -29,11 +29,11 @@ La recheche d'une salle s'effecturera par filtres. Sans filtres renseignés, la 
 ```JAVA
 > l_room
 /* affiche la liste des salles accessibles à l'heure de la commande */
-> look_room -fi
+> look -fi
 /* affiche la liste des salles informatiques (i) fermées (f) */
-> look_room -hdin 2020-01-28_15:30 210 20
+> look -hdin 2020-01-28_15:30 210 20
 /* affiche la liste des salles informatiques accessibles le 28 Janvier 2020 à 15h30 pour une durée de 210 minutes (3 heures trente) et pour 20 personnes */
-> look_room -a
+> look -a
 /* affiche toutes les salles, quelles que soient leurs disponibilité */
 
 /**
@@ -50,11 +50,11 @@ Il peut-être intéressant de lire l'emploi du temps d'une salle, afin de savoir
 Cela permet aussi, lorsque l'on est pas passé par la recherche au prélable, d'afficher les informations plus simples d'une salle.
 
 ```JAVA
-> see_room B2-20
+> see B2-20
 /* affiche les informations de la salle B2-20 pour la journée en cours */
-> see_room -d B2-20 2020-01-29
+> see -d B2-20 2020-01-29
 /* affiche les informations de la salle B2-20 pour le 29 Janvier 2020 */
-> see_room -d B2-20 2020-01-28:2020-02-01
+> see -d B2-20 2020-01-28:2020-02-01
 /* affiche les informations de la salle B2-20 entre le 28 Janvier et le 1 Février 2020 */
 
 
@@ -88,7 +88,7 @@ Après consultation, il faut bien sûr passer par l'étape de réservation. Il e
 Pour réserver, il faut spécifier un horaire et une durée. On demande en plus un commentaire, permettant lors de la consultation d'une salle de connaître l'utilisation qui en est faite.
 
 ```JAVA
-> book_room B2-20 2020-01-28_14:00 120
+> book B2-20 2020-01-28_14:00 120
 /* réserve la salle B2-20 de 14h à 16h le 28 Janvier 2020, pour un cours de mathématiques. */
 > motif : cours de mathématiques
 /* après "motif :" qui s'est affiché automatiquement, on renseigne la raison de la réservation */
