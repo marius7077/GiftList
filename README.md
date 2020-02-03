@@ -27,7 +27,7 @@ L'application sera basée sur une recherche simple :
 La recheche d'une salle s'effecturera par filtres. Sans filtres renseignés, la liste de salles affichées sera par défaut la liste des salles disponibles ou ouvertes à l'instant T. Sinon, il sera possible de filtrer les salles selon qu'elles soient vides ou partiellement occupées, qu'elles soient ou non des salles informatiques et selon le nombre de place et selon l'horaire et la durée (en minutes) de disponibilité. 
 
 ```JAVA
-> l_room
+> look
 /* affiche la liste des salles accessibles à l'heure de la commande */
 > look -fi
 /* affiche la liste des salles informatiques (i) fermées (f) */
