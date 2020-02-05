@@ -1,0 +1,19 @@
+[
+	{
+		"name":"B2-20",
+		"capacity":80,
+		"itroom":false,
+		"l10n":"Batiment B.",
+		"bookList":[
+			{
+				"description":"Mercredi 5 Fevrier de 17h a 17h30"
+			}
+		]
+	},
+	{
+		"name":"B1-18",
+		"capacity":24,
+		"itroom":true,
+		"l10n":"Batiment B."
+	}
+]

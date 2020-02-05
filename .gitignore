@@ -1,0 +1,5 @@
+.metadata/*
+.recommenders/
+.metadata/version.ini
+.metadata/.plugins/org.eclipse.m2e.logback.configuration/0.log
+.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/5.png
