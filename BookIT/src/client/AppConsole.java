@@ -6,7 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +45,7 @@ public class AppConsole {
 			case "s": 
 				Room room = rm.see(commandMap);
 				System.out.println(buildDisplayRoomSee(room));
-				List<Book> books = getBooksToDisplay(room, commandMap.get("date"));
+				List<Book> books = getBooksToDisplay(room, commandMap.get("options"), commandMap.get("date"));
 				books.stream().forEach(b -> System.out.println(buildDisplayBookSee(b)));
 				break;
 			case "b": System.out.println(rm.book(commandMap)); break;
@@ -55,7 +55,7 @@ public class AppConsole {
 
 	private String buildDisplayRoomLook(Room r) {
 		String displayRoom = r.getName();
-		displayRoom += "(" + (rm.isAvailable(r, System.currentTimeMillis(), 0, false) ? (rm.isOpened(r, System.currentTimeMillis()) ? "ouverte" : "libre") : "occupée") + ") - " ;
+		displayRoom += "(" + (rm.isAvailable(r, System.currentTimeMillis(), 0, false) ? (rm.isOpened(r, System.currentTimeMillis()) ? "ouverte" : "libre") : "occupï¿½e") + ") - " ;
 		displayRoom += (r.isItroom() ? "salle informatique" : "salle de cours") + " - " + r.getL10n() + " : ";
 		displayRoom += "Nombre de places : " + r.getCapacity();
 		
@@ -66,7 +66,7 @@ public class AppConsole {
 		String displayRoom = "Salle " + room.getName();
 		displayRoom += "\nSalle informatique : " + (room.isItroom() ? "Oui" : "Non");
 		displayRoom += "\nLocalisation : " + room.getL10n();
-		displayRoom += "\nÉtat actuel : " + (rm.isAvailable(room, System.currentTimeMillis(), 0, false) ? (rm.isOpened(room, System.currentTimeMillis()) ? "Ouverte" : "Libre") : "Occupée");
+		displayRoom += "\nï¿½tat actuel : " + (rm.isAvailable(room, System.currentTimeMillis(), 0, false) ? (rm.isOpened(room, System.currentTimeMillis()) ? "Ouverte" : "Libre") : "Occupï¿½e");
 		displayRoom += "\nNombre de place : " + room.getCapacity();
 		
 		return displayRoom;
@@ -75,13 +75,14 @@ public class AppConsole {
 	private String buildDisplayBookSee(Book b) {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH:mm");
 		String displayBook = df.format(b.getStartDate()) + " - " + df.format(b.getEndDate());
-		displayBook += " : " + (b.isAccessible() ? "ouverte" : "occupée");
+		displayBook += " : " + (b.isAccessible() ? "ouverte" : "occupï¿½e");
 		displayBook += " - " + b.getDescription() + " (" + b.getOwner() + ")";
 
 		return displayBook;
 	}
 
-	private List<Book> getBooksToDisplay(Room room, String d) {
+	private List<Book> getBooksToDisplay(Room room, String a, String d) {
+		if(a == "a") return room.getBookList().stream().sorted(Comparator.comparingLong(Book::getStartDate)).collect(Collectors.toList());
 		long time, startTime, endTime;
 		time = System.currentTimeMillis();
 		startTime = getMidnightTime(time, false);
@@ -98,7 +99,7 @@ public class AppConsole {
 		}
 		
 		List<Book> bookList = new ArrayList<>();
-		for(Book b : room.getBookList()) {
+		for(Book b : room.getBookList().stream().sorted(Comparator.comparingLong(Book::getStartDate)).collect(Collectors.toList())) {
 			if(startTime >= b.getStartDate() && startTime < b.getEndDate() || b.getStartDate() >= startTime && b.getStartDate() < endTime) {
 				bookList.add(b);
 			}

@@ -26,6 +26,13 @@
 				"description":"Pause déjeuner",
 				"owner":"Élève Titouan",
 				"accessible":true
+			},
+			{
+				"startDate":1580628600000,
+				"endDate":1580634000000,
+				"description":"TRavail en autonomie",
+				"owner":"Élève Marius",
+				"accessible":true
 			}
 		]
 	},

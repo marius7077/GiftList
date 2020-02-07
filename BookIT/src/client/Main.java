@@ -2,7 +2,6 @@ package client;
 
 import java.io.FileNotFoundException;
 import java.text.ParseException;
-import java.util.Scanner;
 
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
