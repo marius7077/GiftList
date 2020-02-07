@@ -3,10 +3,14 @@
 		"name":"B2-20",
 		"capacity":80,
 		"itroom":false,
-		"l10n":"Batiment B.",
+		"l10n":"Bâtiment Blériot",
 		"bookList":[
 			{
-				"description":"Mercredi 5 Fevrier de 17h a 17h30"
+				"startDate":1580547600000,
+				"endDate":1583046000000,
+				"description":"Travaux de rénovation",
+				"owner":"Ouvrier Jean-Michel",
+				"accessible":false
 			}
 		]
 	},
@@ -14,6 +18,30 @@
 		"name":"B1-18",
 		"capacity":24,
 		"itroom":true,
-		"l10n":"Batiment B."
+		"l10n":"Batiment Blériot",
+		"bookList":[
+			{
+				"startDate":1580902200000,
+				"endDate":1580907600000,
+				"description":"Pause déjeuner",
+				"owner":"Élève Titouan",
+				"accessible":true
+			}
+		]
+	},
+	{
+		"name":"B0-6",
+		"capacity":18,
+		"itroom":true,
+		"l10n":"Batiment Blériot",
+		"bookList":[
+			{
+				"startDate":1580994000000,
+				"endDate":1581080400000,
+				"description":"Nuit de l'Info",
+				"owner":"Développeur Samuel",
+				"accessible":true
+			}
+		]
 	}
 ]

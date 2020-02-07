@@ -7,10 +7,12 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
@@ -23,6 +25,7 @@ public class RoomManager {
 
 	public List<Room> look(Map<String, String> commandMap) throws ParseException {
 		if("a".equals(commandMap.get("options"))) return getAllRooms();
+
 		boolean closed = commandMap.get("options") != null && commandMap.get("options").contains("f");
 		boolean itroom = commandMap.get("options") != null && commandMap.get("options").contains("i");
 		
@@ -31,16 +34,21 @@ public class RoomManager {
 		int duree = commandMap.get("duree") == null ? 0 : Integer.parseInt(commandMap.get("duree"));
 		int nbPlaces = commandMap.get("nbplaces") == null ? 0 : Integer.parseInt(commandMap.get("nbplaces"));
 		
-		return getAllRooms(date.getTime(), duree, closed, itroom, nbPlaces);
+		List<Room> rooms = getAllRooms(date.getTime(), duree, closed, nbPlaces);
+		if(itroom) return rooms.stream().filter(r -> r.isItroom()).collect(Collectors.toList());
+		return rooms;
 	}
 	
-	private List<Room> getAllRooms(long date, int duree, boolean closed, boolean itroom, int nbPlaces) {
+	public Room see(Map<String, String> commandMap) {
+		return getRoom(commandMap.get("room"));
+	}
+
+	private List<Room> getAllRooms(long date, int duree, boolean closed, int nbPlaces) {
 		List<Room> rooms = getAllRooms();
 		List<Room> roomsWithOptions = new ArrayList<>();
 		for(Room r : rooms) {
-			if(isAvailable(r, date, duree, closed) && nbPlaces <= r.getCapacity() && itroom == r.isItroom()) roomsWithOptions.add(r);
+			if(isAvailable(r, date, duree, closed) && nbPlaces <= r.getCapacity()) roomsWithOptions.add(r);
 		}
-		
 		return roomsWithOptions;
 	}
 
@@ -53,6 +61,14 @@ public class RoomManager {
 			e.printStackTrace();
 			return new ArrayList<>();
 		}	
+	}
+
+	private Room getRoom(String room) {
+		List<Room> rooms = getAllRooms();
+		for(Room r : rooms) {
+			if(room.equals(r.getName())) return r;
+		}
+		return new Room();
 	}
 
 	public boolean isAvailable(Room r, long date, int duree, boolean closed) {
@@ -70,14 +86,13 @@ public class RoomManager {
 	public boolean isOpened(Room r, long time) {
 		if(r.getBookList() != null) {
 			for(Book b : r.getBookList()) {
-				if(time >= b.getStartDate() && time < b.getEndDate()) return false;
+				if(time >= b.getStartDate() && time < b.getEndDate()) return true;
 			}
 		}
-		return true;
+		return false;
 	}
 
 	public String book(Map<String, String> commandMap) { return "book"; }
 
-	public String see(Map<String, String> commandMap) { return "see"; }
-
+	
 }

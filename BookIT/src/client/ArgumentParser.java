@@ -17,7 +17,10 @@ public class ArgumentParser {
 			if('-' == args[1].charAt(0)) {
 				argsMap.putAll(setArgs(args[1].substring(1)));
 			}
-			else argsMap.put("room", args[1]);
+			else {
+				argsMap.put("room", args[1]);
+				return argsMap;
+			}
 		}
 		
 		fillArgs(argsMap, args);
@@ -56,8 +59,8 @@ public class ArgumentParser {
 		int iterator = 2;
 		
 		if("s".equals(argsMap.get("method"))) argsMap.put("room", args[iterator++]);
+		if(argsMap.containsKey("date")) argsMap.put("date", args[iterator++]);
 		if(argsMap.containsKey("duree")) argsMap.put("duree", args[iterator++]);
-		if(argsMap.containsKey("interval")) argsMap.put("interval", args[iterator++]);
 		if(argsMap.containsKey("nbplaces")) argsMap.put("nbplaces", args[iterator++]);		
 	}
 }
