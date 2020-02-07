@@ -16,11 +16,14 @@ import java.util.stream.Collectors;
 public class AppConsole {
 	Scanner sc;
 	RoomManager rm;
+	UserManager um;
 	ArgumentParser ap;
+	User connectedUser;
 
-	public AppConsole(InputStream input, RoomManager rm) {
+	public AppConsole(InputStream input) {
 		this.sc = new Scanner(input);
 		this.rm = new RoomManager();
+		this.um = new UserManager();
 		this.ap = new ArgumentParser();
 	}
 
@@ -38,18 +41,57 @@ public class AppConsole {
 	
 	private void execute(Map<String, String> commandMap) throws ParseException {
 		switch(commandMap.get("method")) {
-			case "l": 
+			case "look": 
 				List<Room> rooms = rm.look(commandMap);
 				rooms.stream().forEach(r -> System.out.println(buildDisplayRoomLook(r)));
 				break;
-			case "s": 
+			case "see": 
 				Room room = rm.see(commandMap);
 				System.out.println(buildDisplayRoomSee(room));
 				List<Book> books = getBooksToDisplay(room, commandMap.get("options"), commandMap.get("date"));
 				books.stream().forEach(b -> System.out.println(buildDisplayBookSee(b)));
 				break;
-			case "b": System.out.println(rm.book(commandMap)); break;
+			case "book": 
+				System.out.println(rm.book(commandMap)); break;		
+			case "connect":
+				if(connectedUser == null) {
+					System.out.println("Connexion : appuyez sur entrer sans écrire de login pour annuler.");
+					connectedUser = tryConnexion(); 
+				} else System.out.println("Vous êtes déjà connecté. Déconnectez-vous pour vous connecter à un autre compte.");
+				break;
+			case "disconnect":
+				if(connectedUser != null) {
+					connectedUser = null;
+					System.out.println("Vous êtes déconnecté.");
+				} else System.out.println("Vous n'êtes pas connecté.");
+				break;
 			default: System.out.println(this.help());
+		}
+	}
+
+	private User tryConnexion() {
+		User user = null;
+		String login, pwd;
+		
+		System.out.print("Login > ");
+		while(true) {
+			login = sc.nextLine();
+			if("".equals(login)) return null;
+			
+			System.out.print("Mot de passe > ");
+			pwd = sc.nextLine();
+			
+			user = um.connect(login, pwd);
+			if(user == null) {
+				System.out.print("Échec de connexion. Réessayer ? Login > ");
+			} else if (user.isLocked()) {
+				System.out.println("Votre compte est verrouillé. Veuillez contacter l'administration.");
+				return null;
+			}
+			else {
+				System.out.println("Connecté en tant que " + user.getName());
+				return user;
+			}
 		}
 	}
 
@@ -66,7 +108,7 @@ public class AppConsole {
 		String displayRoom = "Salle " + room.getName();
 		displayRoom += "\nSalle informatique : " + (room.isItroom() ? "Oui" : "Non");
 		displayRoom += "\nLocalisation : " + room.getL10n();
-		displayRoom += "\n�tat actuel : " + (rm.isAvailable(room, System.currentTimeMillis(), 0, false) ? (rm.isOpened(room, System.currentTimeMillis()) ? "Ouverte" : "Libre") : "Occup�e");
+		displayRoom += "\nÉtat actuel : " + (rm.isAvailable(room, System.currentTimeMillis(), 0, false) ? (rm.isOpened(room, System.currentTimeMillis()) ? "Ouverte" : "Libre") : "Occup�e");
 		displayRoom += "\nNombre de place : " + room.getCapacity();
 		
 		return displayRoom;

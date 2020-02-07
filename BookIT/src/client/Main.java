@@ -1,16 +1,11 @@
 package client;
 
-import java.io.FileNotFoundException;
 import java.text.ParseException;
 
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
-
 public class Main {
-	public static void main(String[] args) throws JsonSyntaxException, JsonIOException, FileNotFoundException {
+	public static void main(String[] args)  {
 		System.out.println("mess_bvn");
-		RoomManager rm = new RoomManager();
-		AppConsole ac = new AppConsole(System.in, rm);
+		AppConsole ac = new AppConsole(System.in);
 		try {
 			ac.start();
 		} catch (ParseException e) {

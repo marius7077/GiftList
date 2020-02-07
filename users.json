@@ -1,0 +1,36 @@
+[
+	{
+		"login":"ii02481",
+		"password":"pwd",
+		"name":"Thomas AUBÉ",
+		"status":"student",
+		"locked":false
+	},
+	{
+		"login":"ij19912",
+		"password":"123456",
+		"name":"Simon WEBER",
+		"status":"student",
+		"locked":false
+	},
+	{
+		"login":"il12118",
+		"password":"marius",
+		"name":"Marius COLIN",
+		"status":"student",
+		"locked":true
+	},
+	{
+		"login":"ij12521",
+		"password":"mdp",
+		"name":"Marine MEUNIER",
+		"status":"teacher",
+		"locked":false
+	},{
+		"login":"il18212",
+		"password":"squalala",
+		"name":"Ruben ATTAL",
+		"status":"stdent",
+		"locked":false
+	}
+]

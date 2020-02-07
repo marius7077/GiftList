@@ -30,9 +30,11 @@ public class ArgumentParser {
 
 	private String getMethod(String method) {
 		switch(method) {
-			case "look": return "l";
-			case "see": return "s";
-			case "book": return "b";
+			case "look": return "look";
+			case "see": return "see";
+			case "book": return "book";
+			case "connect": return "connect";
+			case "disconnect": return "disconnect";
 			default: return null;
 		}
 	}
@@ -58,7 +60,7 @@ public class ArgumentParser {
 	private void fillArgs(Map<String, String> argsMap, String[] args) {
 		int iterator = 2;
 		
-		if("s".equals(argsMap.get("method"))) argsMap.put("room", args[iterator++]);
+		if("see".equals(argsMap.get("method"))) argsMap.put("room", args[iterator++]);
 		if(argsMap.containsKey("date")) argsMap.put("date", args[iterator++]);
 		if(argsMap.containsKey("duree")) argsMap.put("duree", args[iterator++]);
 		if(argsMap.containsKey("nbplaces")) argsMap.put("nbplaces", args[iterator++]);		

@@ -54,11 +54,11 @@ public class RoomManager {
 		Gson gson = new Gson();
 		Type listRooms = new TypeToken<List<Room>>(){}.getType();
 		try {
-			return gson.fromJson(new FileReader("../testJSON.json"), listRooms);
+			return gson.fromJson(new FileReader("../rooms.json"), listRooms);
 		} catch (JsonIOException | JsonSyntaxException | FileNotFoundException e) {
 			e.printStackTrace();
 			return new ArrayList<>();
-		}	
+		}
 	}
 
 	private Room getRoom(String room) {
