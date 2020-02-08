@@ -2,6 +2,8 @@ package client;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -13,6 +15,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
@@ -61,7 +64,7 @@ public class RoomManager {
 		}
 	}
 
-	private Room getRoom(String room) {
+	public Room getRoom(String room) {
 		List<Room> rooms = getAllRooms();
 		for(Room r : rooms) {
 			if(room.equals(r.getName())) return r;
@@ -90,7 +93,23 @@ public class RoomManager {
 		return false;
 	}
 
-	public String book(Map<String, String> commandMap) { return "book"; }
-
-	
+	public Book book(String room, long date, int duree, String descri, String login, boolean closed) {
+		List<Room> rooms = getAllRooms();
+		long endDate = date + (duree * 60000);
+		Book b = new Book(date, endDate, descri, login, !closed);
+		rooms.stream().filter(r -> room.equals(r.getName())).findFirst().orElse(new Room()).getBookList().add(b);
+		
+		Gson gson = new Gson();
+		Type listRooms = new TypeToken<List<Room>>(){}.getType();
+		try {
+			JsonElement jtree = gson.toJsonTree(rooms, listRooms);
+			System.out.println(jtree);
+			FileWriter writer = new FileWriter("../rooms.json");
+			writer.write(jtree.toString());
+			writer.close();
+		} catch (JsonIOException | JsonSyntaxException | IOException e) {
+			e.printStackTrace();
+		}
+		return b; 
+	}
 }

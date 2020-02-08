@@ -10,20 +10,17 @@ public class ArgumentParser {
 	public Map<String, String> parseArgs(String command) {
 		Map<String, String> argsMap  = new HashMap<>();
 		String[] args = command.split(" ");
+		int iterator = 0;
 		
-		if(args.length > 0) argsMap.put("method", getMethod(args[0]));
+		if(args.length > 0) argsMap.put("method", getMethod(args[iterator++]));
 		
 		if(args.length > 1) {
-			if('-' == args[1].charAt(0)) {
-				argsMap.putAll(setArgs(args[1].substring(1)));
-			}
-			else {
-				argsMap.put("room", args[1]);
-				return argsMap;
+			if('-' == args[iterator].charAt(0)) {
+				argsMap.putAll(setArgs(args[iterator++].substring(1)));
 			}
 		}
 		
-		fillArgs(argsMap, args);
+		fillArgs(argsMap, args, iterator);
 		
 		return argsMap;
 	}
@@ -49,6 +46,7 @@ public class ArgumentParser {
 			optionsMap.put("options", "");
 			if(options.contains("f")) optionsMap.put("options", "f");
 			if(options.contains("i")) optionsMap.put("options", optionsMap.get("options") + "i");
+			if(options.contains("l")) optionsMap.put("options", optionsMap.get("options") + "l");
 		}
 
 		if(options.contains("d")) optionsMap.put("date", "");
@@ -57,12 +55,11 @@ public class ArgumentParser {
 		return optionsMap;
 	}
 	
-	private void fillArgs(Map<String, String> argsMap, String[] args) {
-		int iterator = 2;
-		
-		if("see".equals(argsMap.get("method"))) argsMap.put("room", args[iterator++]);
-		if(argsMap.containsKey("date")) argsMap.put("date", args[iterator++]);
-		if(argsMap.containsKey("duree")) argsMap.put("duree", args[iterator++]);
-		if(argsMap.containsKey("nbplaces")) argsMap.put("nbplaces", args[iterator++]);		
+	private void fillArgs(Map<String, String> argsMap, String[] args, int iterator) {
+		if("see".equals(argsMap.get("method")) || "book".equals(argsMap.get("method"))) argsMap.put("room", args[iterator++]);
+		if(argsMap.containsKey("date") || "book".equals(argsMap.get("method"))) argsMap.put("date", args[iterator++]);
+		if(argsMap.containsKey("duree") || "book".equals(argsMap.get("method"))) argsMap.put("duree", args[iterator++]);
+		if(argsMap.containsKey("nbplaces")) argsMap.put("nbplaces", args[iterator++]);	
+		System.out.println(argsMap);
 	}
 }

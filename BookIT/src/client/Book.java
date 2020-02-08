@@ -9,6 +9,14 @@ public class Book {
 
 	public Book() {}
 	
+	public Book(long date, long endDate, String description, String login, boolean accessible) {
+		this.startDate = date;
+		this.endDate = endDate;
+		this.description = description;
+		this.owner = login;
+		this.accessible = accessible;
+	}
+
 	public long getStartDate() {return startDate;}
 	public void setStartDate(long startDate) {this.startDate = startDate;}
 	public long getEndDate() {return endDate;}

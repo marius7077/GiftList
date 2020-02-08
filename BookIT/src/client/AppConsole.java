@@ -52,7 +52,11 @@ public class AppConsole {
 				books.stream().forEach(b -> System.out.println(buildDisplayBookSee(b)));
 				break;
 			case "book": 
-				System.out.println(rm.book(commandMap)); break;		
+				if(connectedUser != null) {
+					Book book = tryBooking(commandMap); 
+					System.out.println(buildDisplayBookSee(book));
+				} else System.out.println("Vous n'êtes pas connecté.");
+				break;		
 			case "connect":
 				if(connectedUser == null) {
 					System.out.println("Connexion : appuyez sur entrer sans écrire de login pour annuler.");
@@ -67,6 +71,29 @@ public class AppConsole {
 				break;
 			default: System.out.println(this.help());
 		}
+	}
+
+	private Book tryBooking(Map<String, String> commandMap) {
+		if(connectedUser != null && !connectedUser.isLocked()) {
+			Room room = rm.getRoom(commandMap.get("room"));
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH:mm");
+			long date = System.currentTimeMillis();
+			try {
+				date = df.parse(commandMap.get("date")).getTime();
+			} catch (ParseException e) { e.printStackTrace(); }
+			int duree = Integer.parseInt(commandMap.get("duree"));
+			boolean closed = "l".equals(commandMap.get("options"));
+			if(room.getName().equals(commandMap.get("room")) && rm.isAvailable(room, date, duree, closed)) {
+				String descri = "";
+				while("".equals(descri)) {
+					System.out.print("Description > ");
+					descri = sc.nextLine();
+				}
+				Book b = rm.book(room.getName(), date, duree, descri, connectedUser.getLogin(), closed);
+				return b;
+			}
+		}
+		return null;
 	}
 
 	private User tryConnexion() {
