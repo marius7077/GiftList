@@ -103,7 +103,6 @@ public class RoomManager {
 		Type listRooms = new TypeToken<List<Room>>(){}.getType();
 		try {
 			JsonElement jtree = gson.toJsonTree(rooms, listRooms);
-			System.out.println(jtree);
 			FileWriter writer = new FileWriter("../rooms.json");
 			writer.write(jtree.toString());
 			writer.close();

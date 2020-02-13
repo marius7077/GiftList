@@ -27,25 +27,27 @@ public class AppConsole {
 		this.ap = new ArgumentParser();
 	}
 
-	public void start() throws ParseException {
+	public void start() {
 		String line;
 		while(true) {
 			System.out.print("> ");	
 			line = sc.nextLine();
 			if(!"".equals(line)) {
-				Map<String, String> commandMap = ap.parseArgs(line);
-				this.execute(commandMap);
+				try {
+					Map<String, String> commandMap = ap.parseArgs(line);
+					this.execute(commandMap);
+				} catch (CommandException | ParseException e) {}
 			}
 		}
 	}
 	
-	private void execute(Map<String, String> commandMap) throws ParseException {
+	private void execute(Map<String, String> commandMap) throws CommandException, ParseException {
 		switch(commandMap.get("method")) {
-			case "look": 
+			case "list": 
 				List<Room> rooms = rm.look(commandMap);
 				rooms.stream().forEach(r -> System.out.println(buildDisplayRoomLook(r)));
 				break;
-			case "see": 
+			case "describe": 
 				Room room = rm.see(commandMap);
 				System.out.println(buildDisplayRoomSee(room));
 				List<Book> books = getBooksToDisplay(room, commandMap.get("options"), commandMap.get("date"));
@@ -57,7 +59,7 @@ public class AppConsole {
 					System.out.println(buildDisplayBookSee(book));
 				} else System.out.println("Vous n'êtes pas connecté.");
 				break;		
-			case "connect":
+			/*case "connect":
 				if(connectedUser == null) {
 					System.out.println("Connexion : appuyez sur entrer sans écrire de login pour annuler.");
 					connectedUser = tryConnexion(); 
@@ -68,8 +70,8 @@ public class AppConsole {
 					connectedUser = null;
 					System.out.println("Vous êtes déconnecté.");
 				} else System.out.println("Vous n'êtes pas connecté.");
-				break;
-			default: System.out.println(this.help());
+				break;*/
+			default: throw new CommandException();
 		}
 	}
 
