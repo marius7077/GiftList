@@ -1,63 +1,72 @@
 package com.bookit.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
+import java.text.ParseException;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
+import com.bookit.model.Book;
 import com.bookit.model.Room;
+import com.bookit.service.JSONManager;
 
 @Controller
 public class RoomController {
-
+	
 	@Autowired
-	@Qualifier("date10")
-	private DateFormat df10;
-	
-	public List<Room> look(Map<String, String> commandMap) {
-		if("a".equals(commandMap.get("options"))) return getAllRooms();
+	private BookController bookCtrl;
+	@Autowired
+	private JSONManager json;
 
-		boolean closed = commandMap.get("options") != null && commandMap.get("options").contains("f");
-		boolean itroom = commandMap.get("options") != null && commandMap.get("options").contains("i");
-		
-		Date date = commandMap.get("date") == null ? new Date() : df10.parse(commandMap.get("date"));
-		int duree = commandMap.get("duree") == null ? 0 : Integer.parseInt(commandMap.get("duree"));
-		int nbPlaces = commandMap.get("nbplaces") == null ? 0 : Integer.parseInt(commandMap.get("nbplaces"));
-		
-		List<Room> rooms = getAllRoomsByOptions(date.getTime(), duree, closed, nbPlaces);
-		if(itroom) return rooms.stream().filter(r -> r.isItroom()).collect(Collectors.toList());
-		return rooms;
+	public List<Room> list(Command command) throws ParseException {
+		if(command.getAllOption()) return json.readRooms();		
+		return getAllRoomsByOptions(command.getStartDate(), command.getEndDate(), command.getClosedOption(), command.getITOption(), command.getNbPers());
 	}
 
-	public Room see(Map<String, String> commandMap) {
-		//return getRoom(commandMap.get("room"));
-		return null;
-	}
-
-	private List<Room> getAllRooms()  {
-		/*Gson gson = new Gson();
-		Type listRooms = new TypeToken<List<Room>>(){}.getType();
-		try {
-			return gson.fromJson(new FileReader("../rooms.json"), listRooms);
-		} catch (JsonIOException | JsonSyntaxException | FileNotFoundException e) {
-			e.printStackTrace();
-			return new ArrayList<>();
-		}*/
-		return null;
+	public Room describe(Command command) {
+		return getRoomByName(command.getRoom());
 	}
 	
-	private List<Room> getAllRoomsByOptions(long date, int duree, boolean closed, int nbPlaces) {
-		/*List<Room> rooms = getAllRooms();
-		List<Room> roomsWithOptions = new ArrayList<>();
-		for(Room r : rooms) {
-			if(isAvailable(r, date, duree, closed) && nbPlaces <= r.getCapacity()) roomsWithOptions.add(r);
+	public boolean checkBookability(Command command) {
+		Room room = getRoomByName(command.getRoom());
+
+		if(room.getBookList() != null) {
+			List<Book> booksInInterval = room.getBookList().stream().filter(b -> bookCtrl.inInterval(b, command.getStartDate(), command.getEndDate())).collect(Collectors.toList());
+			if((command.getClosedOption() || command.getPrivateOption()) && !booksInInterval.isEmpty()) return false;
 		}
-		return roomsWithOptions;*/
-		return null;
+		return true;
+	}
+
+	public boolean book(String roomName, Book book) {
+		List<Room> rooms = json.readRooms();
+		rooms.stream().filter(r -> roomName.equals(r.getName())).findFirst().orElse(new Room()).getBookList().add(book);
+		return json.writeRooms(rooms);
+	}
+	
+	private List<Room> getAllRoomsByOptions(long start, long end, boolean closed, boolean it, int nbPlaces) {
+		return json.readRooms().stream().filter(r -> r.isItroom() == it 
+													&& r.getCapacity() >= nbPlaces
+													&& isAvailable(r, start, end, closed)).collect(Collectors.toList());
+	}
+	
+	public boolean isAvailable(Room room, long start, long end, boolean closed) {
+		if(room.getBookList() != null) {
+			List<Book> booksInInterval = room.getBookList().stream().filter(b -> bookCtrl.inInterval(b, start, end)).collect(Collectors.toList());
+			if(closed && !booksInInterval.isEmpty()) return false;
+		}
+		return true;
+	}
+
+	private Room getRoomByName(String room) {
+		return json.readRooms().stream().filter(r -> room.equals(r.getName())).findFirst().orElse(new Room());
+	}
+
+	public boolean isOpened(Room room, long start) {
+		if(room.getBookList() != null) {
+			List<Book> booksInInterval = room.getBookList().stream().filter(b -> bookCtrl.inInterval(b, start, start + 1)).collect(Collectors.toList());
+			if(!booksInInterval.isEmpty()) return true;
+		}
+		return false;
 	}
 }
