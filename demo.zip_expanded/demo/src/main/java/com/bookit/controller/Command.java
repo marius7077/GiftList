@@ -16,6 +16,7 @@ public class Command {
 	private Long startDate;
 	private Long endDate;
 	private int nbPers;
+	private String help;
 	
 	public Command() {
 		this.allOption = false;
@@ -27,6 +28,8 @@ public class Command {
 		this.endDate = startDate + 1;
 		
 		this.nbPers = 0;
+		
+		this.help = "";
 	}
 
 	public String getMethod() { return this.method; }
@@ -47,4 +50,6 @@ public class Command {
 	public void setEndDate(Long end) { this.endDate = end; }
 	public int getNbPers() { return this.nbPers; }
 	public void setNbPers(int nb) { this.nbPers = nb; }
+	public String getHelp() { return this.help; }
+	public void setHelp(String help) { this.help = help; }
 }

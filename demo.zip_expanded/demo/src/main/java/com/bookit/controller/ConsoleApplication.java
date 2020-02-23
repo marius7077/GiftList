@@ -88,8 +88,13 @@ public class ConsoleApplication {
 				} else printer.println("Réservation impossible. Consultez les disponibilités de la salle.");
 				break;
 				
-				default:
-					throw new CommandException();
+			case "help":
+				if(!"".equals(command.getHelp())) printer.print(help(command.getHelp()));
+				else printer.print("help");
+				break;				
+				
+			default:
+				throw new CommandException();
 		}
 	}
 
@@ -121,5 +126,28 @@ public class ConsoleApplication {
 	private String buildDescription(Scanner scanner) {
 		printer.print("Entrez une description pour la réservation ou tapez 'Entrer' pour quitter : ");
 		return scanner.nextLine();
+	}
+	
+	private String help() {
+		return "Les fonctions disponibles sont les suivantes ;\n"
+				+ "- list : affiche une liste de salle,\n"
+				+ "- describe : affiche les détails d'une salle,\n"
+				+ "- book : permet de réserver une salle.\n"
+				+ "\nTapez help <fonction> pour plus d'informations.";
+	}
+	
+	private String help(String method) {
+		String help;
+		switch(method) {
+			case "describe":
+				return "La fonction describe affiche les détails d'une salle.\n\n"
+						+ "-a permet d'afficher l'historique de réservation de la salle\n"
+						+ "-d permet de spécifier un intervale de dates pour l'affichage des réservations.\n"
+						+ "\t → L'intervale de dates doit être au format AAAA-MM-JJ_hh:mm;AAAA-MM-JJ_hh:mm\n"
+						+ "Par défaut, les réservations en cours seront affichées.\n\n"
+						+ "Exemple d'utilisation : describe <nom_de_salle> [-a|-d <intervalle_de_date>]\n";
+			default:
+				return help();
+		}
 	}
 }

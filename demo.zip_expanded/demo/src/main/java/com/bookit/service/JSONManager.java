@@ -21,8 +21,8 @@ import com.google.gson.JsonSyntaxException;
 
 @Service
 public class JSONManager {
-	private final static String urlRooms = "src/main/java/com/bookit/rooms.json";
-	private final static String urlUsers = "src/main/java/com/bookit/users.json";
+	private final static String urlRooms = "src/main/resources/rooms.json";
+	private final static String urlUsers = "src/main/resources/users.json";
 	
 	@Autowired
 	private Gson gson;

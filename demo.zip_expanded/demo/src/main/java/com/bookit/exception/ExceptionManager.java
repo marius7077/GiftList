@@ -15,7 +15,7 @@ public class ExceptionManager extends Exception {
 	private PrintStream error;
 	
 	public void exceptionCtrl(CommandException e) {
-		if(e.getMethod() != null) error.println("Commande incorrecte. Entrez \"help\" " + e.getMethod() + " pour plus d'informations.");
+		if(e.getMethod() != null) error.println("Commande incorrecte. Entrez \"help " + e.getMethod() + "\" pour plus d'informations.");
 		else error.println("Commande incorrecte. Entrez \"help\" pour plus d'informations.");
 	}
 }

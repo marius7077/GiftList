@@ -16,6 +16,7 @@ public class ArgumentParser {
 	private final static String[] LIST_OPTIONS = { "a", "c", "i", "d", "n" };
 	private final static String[] DESC_OPTIONS = { "a", "d" };
 	private final static String[] BOOK_OPTIONS = { "p" };
+	private final static String HELP = "help";
 
 	@Autowired
 	private DateFormat df;
@@ -27,6 +28,10 @@ public class ArgumentParser {
 
 		if (args.length > 0 && Arrays.asList(METHOD).contains(args[0])) {
 			command.setMethod(args[0]);
+		} else if (args.length > 0 && args[0].equals(HELP)) {
+			command.setMethod(HELP);
+			if(args.length > 1 && Arrays.asList(METHOD).contains(args[1])) command.setHelp(args[1]);
+			return command;
 		} else throw new CommandException();
 		buildCommand(command, args);
 		
@@ -43,8 +48,9 @@ public class ArgumentParser {
 		}
 		try {
 			if(METHOD[1].equals(method) || METHOD[2].equals(method)) command.setRoom(args[iterator++]);
-			if(options.contains("d") || METHOD[2].equals(method)) buildDateOptions(command, args[iterator++]);			
+			if(options.contains("d") || METHOD[2].equals(method)) buildDateOptions(command, args[iterator++]);	
 			if(options.contains("n")) command.setNbPers(Integer.parseInt(args[iterator++]));
+			if(iterator != args.length) throw new CommandException(method);
 		} catch(IndexOutOfBoundsException | ParseException | NumberFormatException e) { throw new CommandException(method); }
 	}
 
