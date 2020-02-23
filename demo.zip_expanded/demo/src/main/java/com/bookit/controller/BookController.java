@@ -15,7 +15,6 @@ public class BookController {
 	 * Get a room's book list to display according to the command options
 	 * @param room : The room of which we want display some books
 	 * @param command : The command with all information about which books have to be displayed
-	 * @see Command
 	 * @return List<Book> : The computed list of books
 	 */
 	public List<Book> getBooksToDisplay(Room room, Command command) {

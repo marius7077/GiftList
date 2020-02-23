@@ -3,10 +3,10 @@ package com.bookit.controller;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,17 +27,17 @@ import com.bookit.service.JSONManager;
 public class RoomControllerTest {
 	private static final long janv2020_01 = 1577833200000L;
 	private static final long fevr2020_01 = 1580511600000L;
-	private List<Room> init = new ArrayList<>();
-	private List<Room> testClosed = new ArrayList<>();
-	private List<Room> testIT = new ArrayList<>();
-	private List<Room> testN = new ArrayList<>();
-	private List<Room> testMultiOption = new ArrayList<>();
-	private List<Book> listBook = new ArrayList<>();
-	private Room r1 = new Room("R1", true, "loc1", 100);
-	private Room r2 = new Room("R2", true, "loc1", 10);
-	private Room r3 = new Room("R3", false, "loc1", 60);
-	private Room r4 = new Room("R4", true, "loc1", 5);
-	private Book b1 = new Book();
+	private static List<Room> init = new ArrayList<>();
+	private static List<Room> testClosed = new ArrayList<>();
+	private static List<Room> testIT = new ArrayList<>();
+	private static List<Room> testN = new ArrayList<>();
+	private static List<Room> testMultiOption = new ArrayList<>();
+	private static List<Book> listBook = new ArrayList<>();
+	private static Room r1 = new Room("R1", true, "loc1", 100);
+	private static Room r2 = new Room("R2", true, "loc1", 10);
+	private static Room r3 = new Room("R3", false, "loc1", 60);
+	private static Room r4 = new Room("R4", true, "loc1", 5);
+	private static Book b1 = new Book();
 	
 	@Spy
 	@InjectMocks

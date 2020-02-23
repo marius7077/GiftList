@@ -7,6 +7,13 @@ public class User {
 	private boolean authorized;
 	
 	public User() {}
+	
+	public User(String login, String password, String name, boolean authorized) {
+		this.login = login;
+		this.password = password;
+		this.name = name;
+		this.authorized = authorized;
+	}
 
 	public String getLogin() { return login; }
 	public void setLogin(String login) { this.login = login; }
