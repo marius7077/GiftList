@@ -83,15 +83,6 @@
     	"name":"B3-4",
     	"itroom":false,
     	"l10n":"Bâtiment Blériot",
-    	"capacity":24,
-    	"bookList":[
-    		{
-    			"startDate":1582467000000,
-    			"endDate":1582468800000,
-    			"owner":"ii02481",
-    			"description":"Révisions",
-    			"priv":false
-    		}
-    	]
+    	"capacity":24
     }
 ]

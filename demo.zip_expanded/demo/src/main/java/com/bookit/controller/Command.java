@@ -1,14 +1,10 @@
 package com.bookit.controller;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.bookit.model.Room;
 
 public class Command {
 	private String method;
-	private String room;
+	private Room room;
 	private boolean allOption;
 	private boolean closedOption;
 	private boolean itOption;
@@ -23,19 +19,31 @@ public class Command {
 		this.closedOption = false;
 		this.itOption = false;
 		this.privateOption = false;
-		
 		this.startDate = System.currentTimeMillis();
 		this.endDate = startDate + 1;
-		
 		this.nbPers = 0;
-		
+		this.method = "";
+		this.room = null;
 		this.help = "";
+	}
+	
+	public Command(boolean a, boolean c, boolean i, boolean p, long startDate, long endDate, int n, String method, Room room, String help) {
+		this.allOption = a;
+		this.closedOption = c;
+		this.itOption = i;
+		this.privateOption = p;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.nbPers = n;
+		this.method = method;
+		this.room = room;
+		this.help = help;
 	}
 
 	public String getMethod() { return this.method; }
 	public void setMethod(String method) { this.method = method; }
-	public String getRoom() { return this.room; }
-	public void setRoom(String room) { this.room = room; }
+	public Room getRoom() { return this.room; }
+	public void setRoom(Room room) { this.room = room; }
 	public boolean getAllOption() { return this.allOption; }
 	public void setAllOption(boolean all) { this.allOption = all; }
 	public boolean getClosedOption() { return this.closedOption; }

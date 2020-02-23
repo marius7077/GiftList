@@ -48,8 +48,8 @@ public class PrintFormater {
 	private String getState(Room r) {
 		long start = System.currentTimeMillis();
 		long end = start + 1;
-		boolean available = roomCtrl.isAvailable(r, start, end, false);
-		boolean opened = roomCtrl.isOpened(r, start);
+		boolean available = roomCtrl.isAccessible(r, start, end, false);
+		boolean opened = roomCtrl.isBooked(r, start);
 		return available ? opened ? "ouverte" : "libre" : "occupée";
 	}
 }

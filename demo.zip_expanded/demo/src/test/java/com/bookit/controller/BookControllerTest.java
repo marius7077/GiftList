@@ -1,7 +1,9 @@
 package com.bookit.controller;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
-import static org.mockito.ArgumentMatchers.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +11,10 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 import com.bookit.model.Book;
 import com.bookit.model.Room;
@@ -26,16 +30,13 @@ public class BookControllerTest {
 	private static final Book b4 = new Book(fevr2020_01, avri2020_01, "login1", "desc1", false);
 	private static final Book b5 = new Book(janv2020_01, avri2020_01, "login1", "desc1", false);
 	private static final Book b6 = new Book(janv2020_01, mars2020_01, "login1", "desc1", false);
-	private List<Book> init;
+	private static final Command cmdA = new Command(true, false, false, false, 0, 0, 0, "", null, "");
+	private static final Command cmdD = new Command(false, false, false, false, janv2020_01, mars2020_01, 0, "", null, "");
+	private List<Book> init, listD;
 	
-	@Mock
+	@Spy
+	@InjectMocks
 	private BookController bookCtrl;
-	
-	@Mock
-	private Command cmdA;
-	
-	@Mock
-	private Command cmdD;
 	
 	@Mock
 	private Room room;
@@ -46,34 +47,33 @@ public class BookControllerTest {
 		init.add(b1);
 		init.add(b2);
 		init.add(b3);
+
+		listD = new ArrayList<>();
+		listD.add(b2);
 		
 		MockitoAnnotations.initMocks(this);
 		
-		when(cmdA.getAllOption()).thenReturn(true);
-		when(cmdD.getAllOption()).thenReturn(false);
-		when(cmdD.getStartDate()).thenReturn(janv2020_01);
-		when(cmdD.getEndDate()).thenReturn(mars2020_01);
-		
 		when(room.getBookList()).thenReturn(init);
-
-		when(bookCtrl.getBooksToDisplay(any(Room.class), any(Command.class))).thenCallRealMethod();
-		when(bookCtrl.inInterval(any(Book.class), anyLong(), anyLong())).thenCallRealMethod();
 	}
 	
 	@Test
 	public void testGetBooksToDisplay() {
-		when(bookCtrl.inInterval(b1, janv2020_01, mars2020_01)).thenReturn(true);
-		when(bookCtrl.inInterval(b2, janv2020_01, mars2020_01)).thenReturn(true);
-		when(bookCtrl.inInterval(b3, janv2020_01, mars2020_01)).thenReturn(false);
-		
+		doReturn(listD).when(bookCtrl).getBooksInInterval(any(Room.class), anyLong(), anyLong());
 		List<Book> testA = bookCtrl.getBooksToDisplay(room, cmdA);
 		Assert.assertEquals(testA, init);
 		
 		List<Book> testD = bookCtrl.getBooksToDisplay(room, cmdD);
-		Assert.assertNotEquals(testD, init);
-		Assert.assertTrue(testD.contains(b1));
-		Assert.assertTrue(testD.contains(b2));
-		Assert.assertFalse(testD.contains(b3));	
+		Assert.assertEquals(testD, listD);
+	}
+	
+	@Test
+	public void testGetBooksInInterval() {
+		doReturn(false).when(bookCtrl).inInterval(b1, janv2020_01, mars2020_01);
+		doReturn(true).when(bookCtrl).inInterval(b2, janv2020_01, mars2020_01);
+		doReturn(false).when(bookCtrl).inInterval(b3, janv2020_01, mars2020_01);
+		
+		List<Book> testD = bookCtrl.getBooksInInterval(room, janv2020_01, mars2020_01);
+		Assert.assertEquals(testD, listD);
 	}
 	
 	@Test

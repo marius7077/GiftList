@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bookit.controller.Command;
+import com.bookit.controller.RoomController;
 import com.bookit.exception.CommandException;
+import com.bookit.exception.UnfoundRoomException;
 
 @Service
 public class ArgumentParser {
@@ -21,8 +23,10 @@ public class ArgumentParser {
 	@Autowired
 	private DateFormat df;
 	
+	@Autowired
+	private RoomController roomCtrl;
 	
-	public Command parseArgs(String line) throws CommandException {
+	public Command parseArgs(String line) throws CommandException, UnfoundRoomException {
 		Command command = new Command();
 		String[] args = line.split(" ");
 
@@ -38,7 +42,7 @@ public class ArgumentParser {
 		return command;
 	}
 
-	private void buildCommand(Command command, String[] args) throws CommandException {
+	private void buildCommand(Command command, String[] args) throws CommandException, UnfoundRoomException {
 		int iterator = 1;
 		String options = "", method = command.getMethod();
 		if(args.length > 1 && '-' == args[iterator].charAt(0)) {
@@ -47,7 +51,7 @@ public class ArgumentParser {
 			buildBooleanOptions(command, options);
 		}
 		try {
-			if(METHOD[1].equals(method) || METHOD[2].equals(method)) command.setRoom(args[iterator++]);
+			if(METHOD[1].equals(method) || METHOD[2].equals(method)) command.setRoom(roomCtrl.getRoomByName(args[iterator++]));
 			if(options.contains("d") || METHOD[2].equals(method)) buildDateOptions(command, args[iterator++]);	
 			if(options.contains("n")) command.setNbPers(Integer.parseInt(args[iterator++]));
 			if(iterator != args.length) throw new CommandException(method);
@@ -72,6 +76,6 @@ public class ArgumentParser {
 	private void buildDateOptions(Command command, String d) throws ParseException {
 		String[] dates = d.split(";");
 		command.setStartDate(df.parse(dates[0]).getTime());
-		if(dates.length == 2) command.setEndDate(df.parse(dates[1]).getTime());
+		command.setEndDate(df.parse(dates[1]).getTime());
 	}
 }

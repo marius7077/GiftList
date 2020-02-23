@@ -1,5 +1,6 @@
 package com.bookit.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Room {
@@ -9,7 +10,17 @@ public class Room {
 	private int capacity;
 	private List<Book> bookList;
 	
-	public Room() {}
+	public Room() {
+		this.bookList = new ArrayList<>();
+	}
+	
+	public Room(String name, boolean itroom, String l10n, int capacity) {
+		this.name = name;
+		this.itroom = itroom;
+		this.l10n = l10n;
+		this.capacity = capacity;
+		this.bookList = new ArrayList<>();
+	}
 
 	public String getName() {return name;}
 	public void setName(String name) { this.name = name; }
