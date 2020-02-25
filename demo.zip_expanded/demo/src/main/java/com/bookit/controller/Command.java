@@ -9,8 +9,8 @@ public class Command {
 	private boolean closedOption;
 	private boolean itOption;
 	private boolean privateOption;
-	private Long startDate;
-	private Long endDate;
+	private long startDate;
+	private long endDate;
 	private int nbPers;
 	private String help;
 	
@@ -52,9 +52,9 @@ public class Command {
 	public void setITOption(boolean it) { this.itOption = it; };
 	public boolean getPrivateOption() { return this.privateOption; }
 	public void setPrivateOption(boolean priv) { this.privateOption = priv; };
-	public Long getStartDate() { return this.startDate; }
+	public long getStartDate() { return this.startDate; }
 	public void setStartDate(Long start) { this.startDate = start; }
-	public Long getEndDate() { return this.endDate; }	
+	public long getEndDate() { return this.endDate; }	
 	public void setEndDate(Long end) { this.endDate = end; }
 	public int getNbPers() { return this.nbPers; }
 	public void setNbPers(int nb) { this.nbPers = nb; }
