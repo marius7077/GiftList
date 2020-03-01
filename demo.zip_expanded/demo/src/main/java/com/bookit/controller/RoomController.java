@@ -22,7 +22,6 @@ public class RoomController {
 	/**
 	 * Get a room list to display according to the command options
 	 * @param command : The command with all information about which rooms have to be displayed
-	 * @see Command
 	 * @return List<Room> : The computed list of rooms
 	 */
 	public List<Room> list(Command command) {
@@ -109,7 +108,14 @@ public class RoomController {
 	public boolean isAccessible(Room room, long start, long end, boolean closed) {
 		if(!room.getBookList().isEmpty()) {
 			List<Book> booksInInterval = bookCtrl.getBooksInInterval(room, start, end);
-			if(closed && !booksInInterval.isEmpty()) return false;
+			if(!booksInInterval.isEmpty()) {
+				if(booksInInterval.stream().filter(b -> b.isPriv()).findFirst().isPresent()) {
+					return false;
+				}
+				if(closed) {
+					return false;
+				}
+			}
 		}
 		return true;
 	}

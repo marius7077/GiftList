@@ -1,5 +1,8 @@
 package com.bookit.model;
 
+/**
+ * Representation of a room booking
+ */
 public class Book {
 	private long startDate;
 	private long endDate;

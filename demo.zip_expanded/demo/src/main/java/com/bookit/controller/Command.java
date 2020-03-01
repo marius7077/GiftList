@@ -2,6 +2,9 @@ package com.bookit.controller;
 
 import com.bookit.model.Room;
 
+/**
+ * Object containing all information about a user command
+ */
 public class Command {
 	private String method;
 	private Room room;

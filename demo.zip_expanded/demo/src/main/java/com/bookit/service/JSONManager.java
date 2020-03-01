@@ -33,7 +33,10 @@ public class JSONManager {
 	@Qualifier("listuser")
 	private Type listusertype;
 	
-
+	/**
+	 * Get the list of all rooms contained in a json file
+	 * @return List<Room> : The list
+	 */
 	public List<Room> readRooms() {
 		try {
 			return gson.fromJson(new FileReader(urlRooms), listroomtype);
@@ -43,6 +46,10 @@ public class JSONManager {
 		}
 	}
 	
+	/**
+	 * Get the list of all users contained in a json file
+	 * @return List<Room> : The list
+	 */
 	public List<User> readUsers() {
 		try {
 			return gson.fromJson(new FileReader(urlUsers), listusertype);
@@ -52,6 +59,10 @@ public class JSONManager {
 		}
 	}
 
+	/**
+	 * Rewrite the json's room list
+	 * @return List<Room> : The list to write
+	 */
 	public boolean writeRooms(List<Room> rooms) {
 		JsonElement jtree = gson.toJsonTree(rooms, listroomtype);
 		FileWriter writer;

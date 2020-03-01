@@ -25,8 +25,8 @@ import com.bookit.model.Room;
 import com.bookit.service.JSONManager;
 
 public class RoomControllerTest {
-	private static final long janv2020_01 = 1577833200000L;
-	private static final long fevr2020_01 = 1580511600000L;
+	private static final long janv202001 = 1577833200000L;
+	private static final long fevr202001 = 1580511600000L;
 	private static List<Room> init = new ArrayList<>();
 	private static List<Room> testClosed = new ArrayList<>();
 	private static List<Room> testIT = new ArrayList<>();
@@ -80,11 +80,11 @@ public class RoomControllerTest {
 	
 	@Test
 	public void testList() {
-		Command cmdAll = new Command(true, false, false, false, janv2020_01, fevr2020_01, 0, "", null, "");
-		Command cmdClosed = new Command(false, true, false, false, janv2020_01, fevr2020_01, 0, "", null, "");
-		Command cmdIT = new Command(false, false, true, false, janv2020_01, fevr2020_01, 0, "", null, "");
-		Command cmdN = new Command(false, false, false, false, janv2020_01, fevr2020_01, 50, "", null, "");
-		Command cmdMultiOption = new Command(false, true, true, false, janv2020_01, fevr2020_01, 50, "", null, "");
+		Command cmdAll = new Command(true, false, false, false, janv202001, fevr202001, 0, "", null, "");
+		Command cmdClosed = new Command(false, true, false, false, janv202001, fevr202001, 0, "", null, "");
+		Command cmdIT = new Command(false, false, true, false, janv202001, fevr202001, 0, "", null, "");
+		Command cmdN = new Command(false, false, false, false, janv202001, fevr202001, 50, "", null, "");
+		Command cmdMultiOption = new Command(false, true, true, false, janv202001, fevr202001, 50, "", null, "");
 		
 		doReturn(true).when(roomCtrl).isAccessible(any(Room.class), anyLong(), anyLong(), anyBoolean());
 		doReturn(false).when(roomCtrl).isAccessible(eq(r2), anyLong(), anyLong(), anyBoolean());
@@ -126,11 +126,11 @@ public class RoomControllerTest {
 	
 	@Test
 	public void testIsAccessible() {
-		r1.getBookList().removeAll(r1.getBookList());
-		Assert.assertTrue(roomCtrl.isAccessible(r1, janv2020_01, janv2020_01, false));
+		r1.setBookList(new ArrayList<Book>());
+		Assert.assertTrue(roomCtrl.isAccessible(r1, janv202001, janv202001, false));
 		r1.getBookList().add(b1);
-		Assert.assertTrue(roomCtrl.isAccessible(r1, janv2020_01, janv2020_01, false));
-		Assert.assertFalse(roomCtrl.isAccessible(r1, janv2020_01, janv2020_01, true));
+		Assert.assertTrue(roomCtrl.isAccessible(r1, janv202001, janv202001, false));
+		Assert.assertFalse(roomCtrl.isAccessible(r1, janv202001, janv202001, true));
 	}
 	
 	@Test(expected = UnfoundRoomException.class)
@@ -143,11 +143,11 @@ public class RoomControllerTest {
 	
 	@Test
 	public void testIsBooked() {
-		r1.getBookList().removeAll(r1.getBookList());
-		Assert.assertFalse(roomCtrl.isBooked(r1, janv2020_01));
+		r1.setBookList(new ArrayList<Book>());
+		Assert.assertFalse(roomCtrl.isBooked(r1, janv202001));
 		r1.getBookList().add(b1);
-		Assert.assertTrue(roomCtrl.isBooked(r1, janv2020_01));
+		Assert.assertTrue(roomCtrl.isBooked(r1, janv202001));
 		when(bookCtrl.getBooksInInterval(any(Room.class), anyLong(), anyLong())).thenReturn(new ArrayList<>());
-		Assert.assertFalse(roomCtrl.isBooked(r1, janv2020_01));
+		Assert.assertFalse(roomCtrl.isBooked(r1, janv202001));
 	}
 }

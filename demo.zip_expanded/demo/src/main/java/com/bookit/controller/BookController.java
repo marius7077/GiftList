@@ -20,10 +20,16 @@ public class BookController {
 	public List<Book> getBooksToDisplay(Room room, Command command) {
 		if(command.getAllOption()) return room.getBookList();
 		
-		//Return the list of the rooms's book which are in the command's interval of time
 		return getBooksInInterval(room, command.getStartDate(), command.getEndDate());
 	}
 
+	/**
+	 * Get a list containing room's book which are in the command's interval of time
+	 * @param room : The room of which we want display some books
+	 * @param start : The start of the interval in millisecond
+	 * @param end : The end of the interval in millisecond
+	 * @return List<Book> : The computed list of books
+	 */
 	public List<Book> getBooksInInterval(Room room, long start, long end) {
 		return room.getBookList().stream()
 				.filter(b -> inInterval(b,  start, end))

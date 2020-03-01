@@ -20,18 +20,18 @@ import com.bookit.model.Book;
 import com.bookit.model.Room;
 
 public class BookControllerTest {
-	private static final long janv2020_01 = 1577833200000L;
-	private static final long fevr2020_01 = 1580511600000L;
-	private static final long mars2020_01 = 1583017200000L;
-	private static final long avri2020_01 = 1585692000000L;
-	private static final Book b1 = new Book(janv2020_01, fevr2020_01, "login1", "desc1", false);
-	private static final Book b2 = new Book(fevr2020_01, mars2020_01, "login1", "desc1", false);
-	private static final Book b3 = new Book(mars2020_01, avri2020_01, "login1", "desc1", false);
-	private static final Book b4 = new Book(fevr2020_01, avri2020_01, "login1", "desc1", false);
-	private static final Book b5 = new Book(janv2020_01, avri2020_01, "login1", "desc1", false);
-	private static final Book b6 = new Book(janv2020_01, mars2020_01, "login1", "desc1", false);
+	private static final long janv202001 = 1577833200000L;
+	private static final long fevr202001 = 1580511600000L;
+	private static final long mars202001 = 1583017200000L;
+	private static final long avri202001 = 1585692000000L;
+	private static final Book b1 = new Book(janv202001, fevr202001, "login1", "desc1", false);
+	private static final Book b2 = new Book(fevr202001, mars202001, "login1", "desc1", false);
+	private static final Book b3 = new Book(mars202001, avri202001, "login1", "desc1", false);
+	private static final Book b4 = new Book(fevr202001, avri202001, "login1", "desc1", false);
+	private static final Book b5 = new Book(janv202001, avri202001, "login1", "desc1", false);
+	private static final Book b6 = new Book(janv202001, mars202001, "login1", "desc1", false);
 	private static final Command cmdA = new Command(true, false, false, false, 0, 0, 0, "", null, "");
-	private static final Command cmdD = new Command(false, false, false, false, janv2020_01, mars2020_01, 0, "", null, "");
+	private static final Command cmdD = new Command(false, false, false, false, janv202001, mars202001, 0, "", null, "");
 	private List<Book> init, listD;
 	
 	@Spy
@@ -68,21 +68,21 @@ public class BookControllerTest {
 	
 	@Test
 	public void testGetBooksInInterval() {
-		doReturn(false).when(bookCtrl).inInterval(b1, janv2020_01, mars2020_01);
-		doReturn(true).when(bookCtrl).inInterval(b2, janv2020_01, mars2020_01);
-		doReturn(false).when(bookCtrl).inInterval(b3, janv2020_01, mars2020_01);
+		doReturn(false).when(bookCtrl).inInterval(b1, janv202001, mars202001);
+		doReturn(true).when(bookCtrl).inInterval(b2, janv202001, mars202001);
+		doReturn(false).when(bookCtrl).inInterval(b3, janv202001, mars202001);
 		
-		List<Book> testD = bookCtrl.getBooksInInterval(room, janv2020_01, mars2020_01);
+		List<Book> testD = bookCtrl.getBooksInInterval(room, janv202001, mars202001);
 		Assert.assertEquals(testD, listD);
 	}
 	
 	@Test
 	public void testInInterval() {
-		Assert.assertFalse(bookCtrl.inInterval(b2, janv2020_01, fevr2020_01));
-		Assert.assertTrue(bookCtrl.inInterval(b4, janv2020_01, mars2020_01));
-		Assert.assertTrue(bookCtrl.inInterval(b2, janv2020_01, avri2020_01));
-		Assert.assertTrue(bookCtrl.inInterval(b5, fevr2020_01, mars2020_01));
-		Assert.assertTrue(bookCtrl.inInterval(b6, fevr2020_01, avri2020_01));
-		Assert.assertFalse(bookCtrl.inInterval(b1, fevr2020_01, mars2020_01));
+		Assert.assertFalse(bookCtrl.inInterval(b2, janv202001, fevr202001));
+		Assert.assertTrue(bookCtrl.inInterval(b4, janv202001, mars202001));
+		Assert.assertTrue(bookCtrl.inInterval(b2, janv202001, avri202001));
+		Assert.assertTrue(bookCtrl.inInterval(b5, fevr202001, mars202001));
+		Assert.assertTrue(bookCtrl.inInterval(b6, fevr202001, avri202001));
+		Assert.assertFalse(bookCtrl.inInterval(b1, fevr202001, mars202001));
 	}
 }

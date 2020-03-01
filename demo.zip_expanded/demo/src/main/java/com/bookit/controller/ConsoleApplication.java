@@ -2,6 +2,7 @@ package com.bookit.controller;
 
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -39,27 +40,32 @@ public class ConsoleApplication {
 		+ "- list : affiche une liste de salle,\n"
 		+ "- describe : affiche les détails d'une salle,\n"
 		+ "- book : permet de réserver une salle.\n"
-		+ "\nTapez help <fonction> pour plus d'informations.";
+		+ "\nTapez help <fonction> pour plus d'informations.\n";
 	private static final String HELP_DESCRIBE = 
 		"La fonction describe affiche les détails d'une salle.\n\n"
 		+ "-a (all) permet d'afficher l'historique de réservation de la salle\n"
 		+ "-d (date) permet de spécifier un intervale de dates pour l'affichage des réservations.\n"
 		+ "\t → L'intervale de dates doit être au format AAAA-MM-JJ_hh:mm;AAAA-MM-JJ_hh:mm\n"
 		+ "Par défaut, les réservations en cours seront affichées.\n\n"
-		+ "Exemple d'utilisation : describe <nom_de_salle> [-(a|d <intervalle_de_date>)]\n";
+		+ "Exemple d'utilisation : describe [-(a|d)] <nom_de_salle> [<intervalle_de_date>]\n";
 	private static final String HELP_LIST = 
-		"La fonction describe une liste de salle.\n\n"
-		+ "-a (all) permet d'afficher l'intégralité des salles\n"
-		+ "-c (closed) permet d'afficher les salles inoccupées\n"
-		+ "-i (it) permet d'afficher les salles informatiques\n"
-		+ "-d (date) permet de spécifier un intervale de dates pour l'affichage des salles.\n"
+		"La fonction list affiche une liste de salle.\n\n"
+		+ "-a (all) permet d'afficher l'intégralité des salles,\n"
+		+ "-c (closed) permet d'afficher les salles inoccupées,\n"
+		+ "-i (it) permet d'afficher les salles informatiques,\n"
+		+ "-d (date) permet de spécifier un intervale de dates pour l'affichage des salles,\n"
 		+ "\t → L'intervale de dates doit être au format AAAA-MM-JJ_hh:mm;AAAA-MM-JJ_hh:mm\n"
-		+ "-n (number) permet d'afficher les salles ayant un minimum de place\n"
+		+ "-n (number) permet d'afficher les salles ayant un minimum de place.\n"
 		+ "\t → La capacité minimale renseignée doit être un nombre entier\n"
 		+ "Les options c, i, d et n peuvent être combinées.\n"
 		+ "Par défaut, les salles actuellement accessibles seront affichées.\n\n"
 		+ "Exemple d'utilisation : list [-(a|c|i|d|n) <intervalle_de_date> <capacité_minimale>]\n"
 		+ "\t → Attention, les dates doivent être spécifiées avant la capacité !\n";
+	private static final String HELP_BOOK = 
+		"La fonction book entame une procédure de réservation d'une salle.\n\n"
+		+ "-p (private) permet de privatiser cette salle.\n\n"
+		+ "Exemple d'utilisation : book [-p] <room> <intervalle_de_date>\n"
+		+ "\t → L'intervale de dates doit être au format AAAA-MM-JJ_hh:mm;AAAA-MM-JJ_hh:mm\n";
 
 	@Autowired
 	private InputStream reader;
@@ -114,14 +120,16 @@ public class ConsoleApplication {
 			case "list":
 				List<Room> rooms;
 				rooms = roomCtrl.list(command);
-				rooms.stream().forEach(r -> printer.println(formater.buildDisplayRoomLook(r)));
+				rooms.stream().forEach(r -> printer.println(formater.buildDisplayRoomLook(r, command)));
 				break;
 		
 			case "describe":
 				Room room = command.getRoom();
 				printer.println(formater.buildDisplayRoomSee(room));
 				List<Book> books = bookCtrl.getBooksToDisplay(room, command);
-				books.stream().forEach(b -> printer.println(formater.buildDisplayBook(b)));
+				//Sort and display books
+				books.stream().sorted(Comparator.comparing(Book::getStartDate))
+					.forEach(b -> printer.println(formater.buildDisplayBook(b)));
 				break;
 				
 			case "book":
@@ -133,7 +141,7 @@ public class ConsoleApplication {
 							Book book = new Book(
 								command.getStartDate(), 
 								command.getEndDate(), 
-								user.getLogin(), 
+								user.getName(), 
 								description, 
 								command.getPrivateOption()
 							);
@@ -172,7 +180,10 @@ public class ConsoleApplication {
 			user = userCtrl.connect(login, password);
 
 			if(user == null) printer.println(AUTHENT_FAILED);
-			else if(!user.isAuthorized()) printer.println(LOCKED_ACCOUNT);
+			else if(!user.isAuthorized()) {
+				printer.println(LOCKED_ACCOUNT);
+				user = null;
+			}
 			else {
 				printer.println(AUTHENT_SUCCES + user.getName());
 				return user;
@@ -213,6 +224,8 @@ public class ConsoleApplication {
 			return HELP_LIST;
 			case "describe":
 			return HELP_DESCRIBE;
+			case "book":
+				return HELP_BOOK;
 			default:
 				return help();
 		}

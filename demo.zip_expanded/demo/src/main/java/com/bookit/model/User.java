@@ -1,5 +1,8 @@
 package com.bookit.model;
 
+/**
+ * Representation of an user
+ */
 public class User {
 	private String login;
 	private String password;

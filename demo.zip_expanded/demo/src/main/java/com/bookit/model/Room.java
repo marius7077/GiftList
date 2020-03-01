@@ -3,6 +3,9 @@ package com.bookit.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Representation of a room
+ */
 public class Room {
 	private String name;
 	private boolean itroom;

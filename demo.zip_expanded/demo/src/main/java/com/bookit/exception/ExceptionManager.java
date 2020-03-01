@@ -16,7 +16,7 @@ public class ExceptionManager extends Exception {
 	
 	public void exceptionCtrl(CommandException e) {
 		if(e.getMethod() != null) error.println("Commande incorrecte. Entrez \"help " + e.getMethod() + "\" pour plus d'informations.");
-		else error.println("Commande incorrecte. Entrez \"help\" pour plus d'informations.");
+		else error.println("Commande incorrecte. Entrez \"help\" pour plus d'informations.\n");
 	}
 	
 	public void exceptionCtrl(UnfoundRoomException e) {

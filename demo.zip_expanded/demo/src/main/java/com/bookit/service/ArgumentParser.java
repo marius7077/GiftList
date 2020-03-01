@@ -26,6 +26,13 @@ public class ArgumentParser {
 	@Autowired
 	private RoomController roomCtrl;
 	
+	/**
+	 * Parse a user entry into a command object
+	 * @param line : The user entry 
+	 * @return Command : The parsed command object
+	 * @throws CommandException : Raised if the entry is not valid
+	 * @throws UnfoundRoomException : Raised if the room does not exist
+	 */
 	public Command parseArgs(String line) throws CommandException, UnfoundRoomException {
 		Command command = new Command();
 		String[] args = line.split(" ");
@@ -44,6 +51,13 @@ public class ArgumentParser {
 		return command;
 	}
 
+	/**
+	 * Build the command object from the arguments of the entry
+	 * @param command : The command object to update
+	 * @param args : The line arguments
+	 * @throws CommandException : Raised if the entry is not valid
+	 * @throws UnfoundRoomException : Raised if the room does not exist
+	 */
 	protected void buildCommand(Command command, String[] args) throws 
 		CommandException, 
 		UnfoundRoomException {
@@ -73,6 +87,12 @@ public class ArgumentParser {
 		}
 	}
 
+	/**
+	 * Check if the entry options are valid
+	 * @param method : The action chosen by the user
+	 * @param options : The option written by the user
+	 * @return boolean : True if options are valid, false if not
+	 */
 	protected boolean correctOptions(String method, String[] options) {
 		if(options.length == 0) return false;
 		if(method.equals(METHOD[0]) 
@@ -96,6 +116,11 @@ public class ArgumentParser {
 		return true;
 	}
 
+	/**
+	 * Set the command object's boolean properties from the selected options
+	 * @param command : The command object to update
+	 * @param options : The option written by the user
+	 */
 	protected void buildBooleanOptions(Command command, String options) {
 		if(options.contains("a")) command.setAllOption(true);
 		if(options.contains("c")) command.setClosedOption(true);
@@ -103,6 +128,12 @@ public class ArgumentParser {
 		if(options.contains("p")) command.setPrivateOption(true);	
 	}
 
+	/**
+	 * Try to parse the date interval of the user entry
+	 * @param command : The command object to update
+	 * @param d : The date interval
+	 * @throws ParseException : Raised if the date interval is not parsable
+	 */
 	protected void buildDateOptions(Command command, String d) throws ParseException {
 		String[] dates = d.split(";");
 		command.setStartDate(df.parse(dates[0]).getTime());

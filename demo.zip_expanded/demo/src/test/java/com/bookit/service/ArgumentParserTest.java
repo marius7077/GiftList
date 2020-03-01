@@ -31,15 +31,15 @@ import com.bookit.exception.UnfoundRoomException;
 import com.bookit.model.Room;
 
 public class ArgumentParserTest {
-	private static final String method_list = "list";
-	private static final String method_desc = "describe";
-	private static final String method_book = "book";
-	private static final String method_help = "help";
-	private static final String date_interval = "2020-01-01_00:00;2020-02-01_00:00";
-	private static final long janv2020_01 = 1577833200000L;
-	private static final long fevr2020_01 = 1580511600000L;
+	private static final String methodList = "list";
+	private static final String methodDesc = "describe";
+	private static final String methodBook = "book";
+	private static final String methodHelp = "help";
+	private static final String dateInterval = "2020-01-01_00:00;2020-02-01_00:00";
+	private static final long janv202001 = 1577833200000L;
+	private static final long fevr202001 = 1580511600000L;
 	private static Room r1 = new Room("R1", false, "", 0);
-	private static SimpleDateFormat date_parser = new SimpleDateFormat("yyyy-MM-dd_HH:mm");
+	private static SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd_HH:mm");
 	
 	
 	@Spy
@@ -63,24 +63,24 @@ public class ArgumentParserTest {
 	public void testParseArgs() throws CommandException, UnfoundRoomException {	
 		doNothing().when(parser).buildCommand(any(Command.class), any());
 		
-		Command cmd_list = parser.parseArgs(method_list);
-		Command cmd_desc = parser.parseArgs(method_desc);
-		Command cmd_book = parser.parseArgs(method_book);
-		Command cmd_help = parser.parseArgs(method_help);
-		Command cmd_help_method = parser.parseArgs(method_help + " " + method_list);
+		Command cmdList = parser.parseArgs(methodList);
+		Command cmdDesc = parser.parseArgs(methodDesc);
+		Command cmdBook = parser.parseArgs(methodBook);
+		Command cmdHelp = parser.parseArgs(methodHelp);
+		Command cmdHelpMethod = parser.parseArgs(methodHelp + " " + methodList);
 
 		verify(parser, times(3)).buildCommand(any(Command.class), any());
-		Assert.assertEquals(method_list, cmd_list.getMethod());
-		Assert.assertEquals(method_desc, cmd_desc.getMethod());
-		Assert.assertEquals(method_book, cmd_book.getMethod());
-		Assert.assertEquals(method_help, cmd_help.getMethod());
-		Assert.assertEquals(method_help, cmd_help_method.getMethod());
-		Assert.assertEquals(method_list, cmd_help_method.getHelp());
+		Assert.assertEquals(methodList, cmdList.getMethod());
+		Assert.assertEquals(methodDesc, cmdDesc.getMethod());
+		Assert.assertEquals(methodBook, cmdBook.getMethod());
+		Assert.assertEquals(methodHelp, cmdHelp.getMethod());
+		Assert.assertEquals(methodHelp, cmdHelpMethod.getMethod());
+		Assert.assertEquals(methodList, cmdHelpMethod.getHelp());
 	}
 	
 	@Test(expected = CommandException.class)
 	public void testParseArgsWithInvalidMethod() throws CommandException, UnfoundRoomException {
-		Command cmd_blank = parser.parseArgs(" ");
+		Command cmdBlank = parser.parseArgs(" ");
 		
 		//To be sure exception was raised before
 		Assert.assertTrue(false);
@@ -92,35 +92,35 @@ public class ArgumentParserTest {
 		doNothing().when(parser).buildDateOptions(any(Command.class), anyString());
 		doNothing().when(parser).buildBooleanOptions(any(Command.class), anyString());
 		
-		String[] args_list = { method_list };
-		Command cmd_list = mock(Command.class);
-		doCallRealMethod().when(cmd_list).setMethod(anyString());
-		cmd_list.setMethod(method_list);
-		parser.buildCommand(cmd_list, args_list);
-		verify(cmd_list, times(0)).setRoom(any(Room.class));
-		verify(cmd_list, times(0)).setNbPers(anyInt());
+		String[] argsList = { methodList };
+		Command cmdList = mock(Command.class);
+		doCallRealMethod().when(cmdList).setMethod(anyString());
+		cmdList.setMethod(methodList);
+		parser.buildCommand(cmdList, argsList);
+		verify(cmdList, times(0)).setRoom(any(Room.class));
+		verify(cmdList, times(0)).setNbPers(anyInt());
 		
-		String[] args_list_opt = { method_list, "-opt"};
-		Command cmd_list_opt = new Command();
-		cmd_list_opt.setMethod(method_list);
-		parser.buildCommand(cmd_list_opt, args_list_opt);
-		verify(parser, times(1)).buildBooleanOptions(cmd_list_opt, "opt");
-		Assert.assertNull(cmd_list_opt.getRoom());
+		String[] argsListOpt = { methodList, "-opt"};
+		Command cmdListOpt = new Command();
+		cmdListOpt.setMethod(methodList);
+		parser.buildCommand(cmdListOpt, argsListOpt);
+		verify(parser, times(1)).buildBooleanOptions(cmdListOpt, "opt");
+		Assert.assertNull(cmdListOpt.getRoom());
 		
-		String[] args_desc_DN = { method_desc, "-dn", "R1", "<date_interval>", "1" };
-		Command cmd_desc_DN = new Command();
-		cmd_desc_DN.setMethod(method_desc);
-		parser.buildCommand(cmd_desc_DN, args_desc_DN);
-		verify(parser, times(1)).buildDateOptions(cmd_desc_DN, "<date_interval>" );
-		Assert.assertEquals(r1,  cmd_desc_DN.getRoom());
-		Assert.assertEquals(1,  cmd_desc_DN.getNbPers());
+		String[] argsDescDN = { methodDesc, "-dn", "R1", "<date_interval>", "1" };
+		Command cmdDescDN = new Command();
+		cmdDescDN.setMethod(methodDesc);
+		parser.buildCommand(cmdDescDN, argsDescDN);
+		verify(parser, times(1)).buildDateOptions(cmdDescDN, "<date_interval>" );
+		Assert.assertEquals(r1,  cmdDescDN.getRoom());
+		Assert.assertEquals(1,  cmdDescDN.getNbPers());
 		
-		String[] args_desc_N = { method_desc, "-n", "R1", "1" };
-		Command cmd_desc_N = new Command();
-		cmd_desc_N.setMethod(method_desc);
-		parser.buildCommand(cmd_desc_N, args_desc_N);
-		Assert.assertEquals(r1,  cmd_desc_DN.getRoom());
-		Assert.assertEquals(1,  cmd_desc_DN.getNbPers());
+		String[] argsDescN = { methodDesc, "-n", "R1", "1" };
+		Command cmdDescN = new Command();
+		cmdDescN.setMethod(methodDesc);
+		parser.buildCommand(cmdDescN, argsDescN);
+		Assert.assertEquals(r1,  cmdDescDN.getRoom());
+		Assert.assertEquals(1,  cmdDescDN.getNbPers());
 	}
 	
 	@Test(expected = CommandException.class)
@@ -128,9 +128,9 @@ public class ArgumentParserTest {
 		doReturn(true).when(parser).correctOptions(anyString(), any());
 		doNothing().when(parser).buildDateOptions(any(Command.class), anyString());
 		doNothing().when(parser).buildBooleanOptions(any(Command.class), anyString());
-		String[] args = { method_book };
+		String[] args = { methodBook };
 		Command c = new Command();
-		c.setMethod(method_book);
+		c.setMethod(methodBook);
 		parser.buildCommand(c,  args);
 	}
 	
@@ -139,9 +139,9 @@ public class ArgumentParserTest {
 		doReturn(true).when(parser).correctOptions(anyString(), any());
 		doNothing().when(parser).buildDateOptions(any(Command.class), anyString());
 		doNothing().when(parser).buildBooleanOptions(any(Command.class), anyString());
-		String[] args = { method_book, "R1" };
+		String[] args = { methodBook, "R1" };
 		Command c = new Command();
-		c.setMethod(method_book);
+		c.setMethod(methodBook);
 		parser.buildCommand(c,  args);
 	}
 	
@@ -150,9 +150,9 @@ public class ArgumentParserTest {
 		doReturn(true).when(parser).correctOptions(anyString(), any());
 		doNothing().when(parser).buildDateOptions(any(Command.class), anyString());
 		doNothing().when(parser).buildBooleanOptions(any(Command.class), anyString());
-		String[] args = { method_list, "-d" };
+		String[] args = { methodList, "-d" };
 		Command c = new Command();
-		c.setMethod(method_list);
+		c.setMethod(methodList);
 		parser.buildCommand(c,  args);
 	}
 	
@@ -161,9 +161,9 @@ public class ArgumentParserTest {
 		doReturn(true).when(parser).correctOptions(anyString(), any());
 		doNothing().when(parser).buildDateOptions(any(Command.class), anyString());
 		doNothing().when(parser).buildBooleanOptions(any(Command.class), anyString());
-		String[] args = { method_list, "-n" };
+		String[] args = { methodList, "-n" };
 		Command c = new Command();
-		c.setMethod(method_list);
+		c.setMethod(methodList);
 		parser.buildCommand(c,  args);
 	}
 	
@@ -172,9 +172,9 @@ public class ArgumentParserTest {
 		doReturn(true).when(parser).correctOptions(anyString(), any());
 		doNothing().when(parser).buildDateOptions(any(Command.class), anyString());
 		doNothing().when(parser).buildBooleanOptions(any(Command.class), anyString());
-		String[] args = { method_list, "-n", "bonjour" };
+		String[] args = { methodList, "-n", "bonjour" };
 		Command c = new Command();
-		c.setMethod(method_list);
+		c.setMethod(methodList);
 		parser.buildCommand(c,  args);
 	}
 	
@@ -183,30 +183,30 @@ public class ArgumentParserTest {
 		doReturn(true).when(parser).correctOptions(anyString(), any());
 		doNothing().when(parser).buildDateOptions(any(Command.class), anyString());
 		doNothing().when(parser).buildBooleanOptions(any(Command.class), anyString());
-		String[] args = { method_list, "bonjour" };
+		String[] args = { methodList, "bonjour" };
 		Command c = new Command();
-		c.setMethod(method_list);
+		c.setMethod(methodList);
 		parser.buildCommand(c,  args);
 	}
 	
 	@Test
 	public void testCorrectoptions() {
-		String method_blank = "";
-		String[] options_blank = {};		
-		String[] options_list = { "a", "c", "i", "d", "n" };
-		String[] options_desc = { "a", "d" };
-		String[] options_book = { "p" };
-		String[] false_options_list = { "a", "c", "i", "d", "n", "p" };
-		String[] false_options_desc = { "a", "d", "i" };
-		String[] false_options_book = { "p", "a" };
+		String methodBlank = "";
+		String[] optionsBlank = {};		
+		String[] optionsList = { "a", "c", "i", "d", "n" };
+		String[] optionsDesc = { "a", "d" };
+		String[] optionsBook = { "p" };
+		String[] falseOptionsList = { "a", "c", "i", "d", "n", "p" };
+		String[] falseOptionsDesc = { "a", "d", "i" };
+		String[] falseOptionsBook = { "p", "a" };
 	
-		Assert.assertFalse(parser.correctOptions(method_blank, options_blank));
-		Assert.assertFalse(parser.correctOptions(method_list, false_options_list));
-		Assert.assertFalse(parser.correctOptions(method_desc, false_options_desc));
-		Assert.assertFalse(parser.correctOptions(method_book, false_options_book));
-		Assert.assertTrue(parser.correctOptions(method_list, options_list));
-		Assert.assertTrue(parser.correctOptions(method_desc, options_desc));
-		Assert.assertTrue(parser.correctOptions(method_book, options_book));
+		Assert.assertFalse(parser.correctOptions(methodBlank, optionsBlank));
+		Assert.assertFalse(parser.correctOptions(methodList, falseOptionsList));
+		Assert.assertFalse(parser.correctOptions(methodDesc, falseOptionsDesc));
+		Assert.assertFalse(parser.correctOptions(methodBook, falseOptionsBook));
+		Assert.assertTrue(parser.correctOptions(methodList, optionsList));
+		Assert.assertTrue(parser.correctOptions(methodDesc, optionsDesc));
+		Assert.assertTrue(parser.correctOptions(methodBook, optionsBook));
 	}
 	
 	@Test
@@ -245,14 +245,14 @@ public class ArgumentParserTest {
 	@Test(expected = ParseException.class)
 	public void testBuildDateOptions() throws ParseException {
 		Command c = new Command();
-		Date d1 = date_parser.parse("2020-01-01_00:00");
-		Date d2 = date_parser.parse("2020-02-01_00:00");
+		Date d1 = dateParser.parse("2020-01-01_00:00");
+		Date d2 = dateParser.parse("2020-02-01_00:00");
 		when(df.parse("2020-01-01_00:00")).thenReturn(d1);
 		when(df.parse("2020-02-01_00:00")).thenReturn(d2);
 		
-		parser.buildDateOptions(c, date_interval);
-		Assert.assertEquals(janv2020_01, c.getStartDate());
-		Assert.assertEquals(fevr2020_01, c.getEndDate());
+		parser.buildDateOptions(c, dateInterval);
+		Assert.assertEquals(janv202001, c.getStartDate());
+		Assert.assertEquals(fevr202001, c.getEndDate());
 		
 		when(df.parse("bonjour")).thenThrow(ParseException.class);
 		parser.buildDateOptions(c, "bonjour");

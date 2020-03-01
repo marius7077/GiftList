@@ -18,7 +18,7 @@ import com.bookit.service.JSONManager;
 public class UserControllerTest {
 	private static List<User> listUser = new ArrayList<>();
 	private static User u1 = new User("l1", "p1", "n1", true);
-	private static User u2 = new User("l2", "p2", "n2", true);
+	private static User u2 = new User("l2", "p2", "n2", false);
 	
 	@InjectMocks
 	private UserController userCtrl;
@@ -41,6 +41,8 @@ public class UserControllerTest {
 		User test = userCtrl.connect("l1", "p1");
 		Assert.assertEquals(u1, test);
 		User testfail = userCtrl.connect("", "");
+		Assert.assertNull(testfail);
+		User testUnauth = userCtrl.connect("l2", "p2");
 		Assert.assertNull(testfail);
 	}
 }
