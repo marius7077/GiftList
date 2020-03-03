@@ -1,8 +1,8 @@
-./BookIT/.mvn/*
-./BookIT/.settings/*
-./BookIT/bin/*
-./BookIT/META-INF/*
-./BookIT/target/*
-./BookIT/mvnw
-./BookIT/mvnw.cmd
-./.metadata
+BookIT/.mvn/
+BookIT/.settings/
+BookIT/bin/
+BookIT/META-INF/
+BookIT/target/
+BookIT/mvnw
+BookIT/mvnw.cmd
+.metadata/
