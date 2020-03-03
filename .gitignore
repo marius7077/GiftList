@@ -1,5 +1,9 @@
 .metadata/*
-.recommenders/
-.metadata/version.ini
-.metadata/.plugins/org.eclipse.m2e.logback.configuration/0.log
-.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/5.png
+.recommenders/*
+./demo.zip_expanded/bin/*
+./demo.zip_expanded/demo/.mvn/*
+./demo.zip_expanded/demo/.settings/*
+./demo.zip_expanded/demo/bin/*
+./demo.zip_expanded/demo/com/*
+./demo.zip_expanded/demo/META-INF/*
+./demo.zip_expanded/demo/target/*
