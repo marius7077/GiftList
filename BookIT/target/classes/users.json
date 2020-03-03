@@ -1,0 +1,61 @@
+[
+	{
+		"login":"ii02481",
+		"password":"pwd",
+		"name":"Thomas AUBÉ",
+		"authorized":true
+	},
+	{
+		"login":"ij19912",
+		"password":"123456",
+		"name":"Simon WEBER",
+		"authorized":true
+	},
+	{
+		"login":"il12118",
+		"password":"marius",
+		"name":"Marius COLIN",
+		"authorized":true
+	},
+	{
+		"login":"ij12521",
+		"password":"mdp",
+		"name":"Marine MEUNIER",
+		"authorized":true
+	},{
+		"login":"il18212",
+		"password":"squalala",
+		"name":"Ruben ATTAL",
+		"authorized":false
+	},
+	{
+		"login":"pp00001",
+		"password":"vb",
+		"name":"Vincent BOUTOUR",
+		"authorized":true
+	},
+	{
+		"login":"pp00002",
+		"password":"jr",
+		"name":"Julien ROSSIT",
+		"authorized":true
+	},
+	{
+		"login":"pp00003",
+		"password":"eb",
+		"name":"Etienne BIRMELE",
+		"authorized":true
+	},
+	{
+		"login":"bot___1",
+		"password":"bot",
+		"name":"BOT_01",
+		"authorized":true
+	},
+	{
+		"login":"bot___2",
+		"password":"bot2",
+		"name":"BOT_02",
+		"authorized":true
+	}
+]

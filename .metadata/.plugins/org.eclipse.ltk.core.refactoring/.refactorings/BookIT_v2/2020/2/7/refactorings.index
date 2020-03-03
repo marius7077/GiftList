@@ -1,0 +1,31 @@
+1581626579874	Copy compilation unit
+1581626592499	Delete element
+1581626810166	Rename package 'com.example.demo'
+1581628179117	Copy compilation unit
+1581628182251	Delete element
+1581628189161	Delete element
+1581628461981	Rename package 'com.bookit.console'
+1581628488597	Move compilation units
+1581628491512	Delete element
+1581628651605	Rename package 'com.example.demo'
+1581629446577	Rename package 'com.bookit.controler'
+1581629463322	Rename type 'ConsoleControler'
+1581629544139	Move compilation unit
+1581629760778	Move compilation unit
+1581629779785	Rename type 'AppConsole'
+1581629899358	Move compilation unit
+1581629904845	Delete element
+1581629951382	Rename type 'DemoApplication'
+1581630030537	Delete element
+1581630154368	Move compilation unit
+1581630210262	Move compilation unit
+1581630221062	Rename package 'com.bookit.services'
+1581630242623	Delete element
+1581632297135	Rename type 'BookITApplication'
+1581632348738	Rename type 'DemoApplication'
+1581634250339	Delete element
+1581634442896	Rename type 'CommandException'
+1581635611077	Rename type 'ExceptionController'
+1581843744882	Rename method 'look'
+1581843850639	Rename method 'see'
+1581894376398	Rename method 'buildDisplayBookSee'

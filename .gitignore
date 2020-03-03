@@ -1,9 +1,7 @@
-.metadata/*
-.recommenders/*
-./demo.zip_expanded/bin/*
-./demo.zip_expanded/demo/.mvn/*
-./demo.zip_expanded/demo/.settings/*
-./demo.zip_expanded/demo/bin/*
-./demo.zip_expanded/demo/com/*
-./demo.zip_expanded/demo/META-INF/*
-./demo.zip_expanded/demo/target/*
+./BookIT/.mvn/*
+./BookIT/.settings/*
+./BookIT/bin/*
+./BookIT/META-INF/*
+./BookIT/target/*
+./BookIT/mvnw
+./BookIT/mvnw.cmd
