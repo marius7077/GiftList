@@ -4,7 +4,7 @@
 
 * 👨🏻‍💻 Thomas Aube : [thomasaube](https://github.com/thomasaube)
 * 👨🏻‍💻 Ruben Attal : [ruben-git](https://github.com/ruben-git)
-* 👨🏻‍💻 Marius Collin : [marius7077](https://github.com/marius7077)
+* 👨🏻‍💻 Marius Colin : [marius7077](https://github.com/marius7077)
 * 👩🏼‍💻 Marine Meunier : [meuniermarine](https://github.com/ViBiOh)
 * 👨🏻‍💻 Simon Weber : [simras98](https://github.com/simras98)
 
