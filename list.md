@@ -2,7 +2,7 @@
 
 ##### Présentation
 
-Chacun peut afficher les salles disponibles, et affiner l'affichage par l'utilisation de filtres. Il est possible de filtrer les salles selon leur nombre de places, leur disponibilité ou le fait qu'elles soient dotées de matériel informatique.
+Chacun peut afficher les salles disponibles, et affiner l'affichage par l'utilisation de filtres. Il est possible de filtrer les salles selon leur nombre de places, leur disponibilité ou le fait qu'elles soient dotées de matériels informatiques.
 
 Par défaut, les salles seront toutes affichées, à moins qu'elles soient à l'instant T occupées et privées. Il existe également une option permettant d'afficher l'intégralité des salles.
 
