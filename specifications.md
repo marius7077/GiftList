@@ -11,13 +11,13 @@
 
 ### Projet
 
-L’application Book’IT permet une gestion simplifiée des salles de l’IUT de Paris. Du côté des utilisateurs, elle permet de consulter les informations et de réserver une salle en fonction de différents paramètres. 
+L’application Book’IT permet une gestion simplifiée des salles de l’IUT de Paris Descartes. Du côté des utilisateurs, elle permet de consulter les informations et de réserver une salle en fonction de différents paramètres. 
 Du côté des gestionnaires des salles de l’IUT, elle permet d’avoir une vision globale de l’utilisation des salles, d’organiser les emplois du temps en fonction des besoins des professeurs. 
 
 
 ### Interaction avec l'outil
 
-Application console, via la console d'une IDE ou via l'interface de commande de son PC et l'utilisation d'un JAR
+Application console, via la console d'un IDE ou via l'interface de commande de son PC et l'utilisation d'un JAR
 
 
 ### Langage
