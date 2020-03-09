@@ -4,7 +4,7 @@
 
 ### Motivation
 
-Nous sommes 5 étudiants de l’IUT de Paris. Nous avons souhaité développer une application qui nous serait utile dans notre quotidien. En tant qu’étudiants, l’objectif pédagogique de cette application est de nous permettre de mettre en pratique les connaissances acquises lors du cours, notamment sur le plan organisationnel. 
+Nous sommes 5 étudiants de l’IUT de Paris Descartes. Nous avons souhaité développer une application qui nous serait utile dans notre quotidien. En tant qu’étudiants, l’objectif pédagogique de cette application est de nous permettre de mettre en pratique les connaissances acquises lors du cours, notamment sur le plan organisationnel. 
 
 ### Situation
 
