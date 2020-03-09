@@ -16,7 +16,7 @@ Par défaut, la réservation est publique, et la salle est accessible à tous du
 //Entamme une procédure de réservation privée de la salle B2-20 de 9h à 12h30 le 10 Mars 2020
 ```
 
-**Si le créneau est disponible, il sera demandé à l'utilisateur de s'authentifier au moyen d'un login et d'un mot de passe et de renseigner le motif de la réservation. Il est possible que son compte utilisateur soit bloqué, dans ce cas la réservation ne peut être effectuée.**
+Si le créneau est disponible, il sera demandé à l'utilisateur de s'authentifier au moyen d'un login et d'un mot de passe et de renseigner le motif de la réservation. Il est possible que son compte utilisateur soit bloqué, dans ce cas la réservation ne peut être effectuée.
 
 ##### Réponse
 
