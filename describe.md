@@ -31,7 +31,7 @@ Nombre de places : <nombre_place>
 ```
 **La dernière ligne concerne les réservations et s'affiche autant de fois que nécessaire**
 
-##### Exemple :
+Exemple :
 
 *Salle B2-20*
 
