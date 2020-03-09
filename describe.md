@@ -2,7 +2,7 @@
 
 ##### Présentation
 
-Chacun peut afficher le détails des réservations d'une salle ainsi que ses informations générales.
+Chacun peut afficher le détail des réservations d'une salle ainsi que ses informations générales.
 
 Par défaut, l'état et la réservation en cours de la salle seront affichés, mais il est possible de spécifier un intervalle de temps à étudier.
 
