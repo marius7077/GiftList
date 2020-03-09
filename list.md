@@ -19,7 +19,7 @@ Par défaut, les salles seront toutes affichées, à moins qu'elles soient à l'
 //Affiche toutes les salles informatisées (i pour IT) actuellement inoccupées (c pour closed). Ces deux paramètres peuvent être utilisés séparément
 
 > list -dn 2020-03-10_09:00;2020-03-10_12:30 20
-//Affiche toutes les salles accessibles entre 9h et 12h30 le 10 Mars 2020 (d pour date) qui contiennent au moins 20 places (n pour number). Ces deux paramètres peuvent être utilisés séparéments, mais utilisés ensembles, l'intervalle de temps doit toujours être spécifié avant le nombre de place.
+//Affiche toutes les salles accessibles entre 9h et 12h30 le 10 Mars 2020 (d pour date) qui contiennent au moins 20 places (n pour number). Ces deux paramètres peuvent être utilisés séparéments, mais utilisés ensembles, l'intervalle de temps doit toujours être spécifié avant le nombre de place
 ```
 
 ##### Réponse
