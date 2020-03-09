@@ -1,24 +1,28 @@
 package com.bookit.service;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.util.Arrays;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.bookit.controller.Command;
 import com.bookit.controller.RoomController;
 import com.bookit.exception.CommandException;
 import com.bookit.exception.UnfoundRoomException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Arrays;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ArgumentParser {
-	private final static String[] METHOD = { "list", "describe", "book" };
-	private final static String[] LIST_OPTIONS = { "a", "c", "i", "d", "n" };
-	private final static String[] DESC_OPTIONS = { "a", "d" };
-	private final static String[] BOOK_OPTIONS = { "p" };
-	private final static String HELP = "help";
+	@Value("#{'${listMethod}'.split(',')}")
+	private String[] listMethod;
+	@Value("#{'${listOptions}'.split(',')}")
+	private String[] listOptions;
+	@Value("#{'${descOptions}'.split(',')}")
+	private String[] descOptions;
+	@Value("#{'${bookOptions}'.split(',')}")
+	private String[] bookOptions;
+	@Value("${argumentParserHelp}")
+	private String help;
 
 	@Autowired
 	private DateFormat df;
@@ -36,12 +40,11 @@ public class ArgumentParser {
 	public Command parseArgs(String line) throws CommandException, UnfoundRoomException {
 		Command command = new Command();
 		String[] args = line.split(" ");
-
-		if (args.length > 0 && Arrays.asList(METHOD).contains(args[0])) {
+		if (args.length > 0 && Arrays.asList(listMethod).contains(args[0])) {
 			command.setMethod(args[0]);
-		} else if (args.length > 0 && args[0].equals(HELP)) {
-			command.setMethod(HELP);
-			if(args.length > 1 && Arrays.asList(METHOD).contains(args[1])) {
+		} else if (args.length > 0 && args[0].equals(help)) {
+			command.setMethod(help);
+			if(args.length > 1 && Arrays.asList(listMethod).contains(args[1])) {
 				command.setHelp(args[1]);
 			}
 			return command;
@@ -63,7 +66,8 @@ public class ArgumentParser {
 		UnfoundRoomException {
 		
 		int iterator = 1;
-		String options = "", method = command.getMethod();
+		String options = "";
+		String method = command.getMethod();
 		if(args.length > 1 && '-' == args[iterator].charAt(0)) {
 			options = args[iterator++].substring(1);
 			if(!correctOptions(command.getMethod(), options.split(""))) {
@@ -72,10 +76,10 @@ public class ArgumentParser {
 			buildBooleanOptions(command, options);
 		}
 		try {
-			if(METHOD[1].equals(method) || METHOD[2].equals(method)) {
+			if(this.listMethod[1].equals(method) || this.listMethod[2].equals(method)) {
 				command.setRoom(roomCtrl.getRoomByName(args[iterator++]));
 			}
-			if(options.contains("d") || METHOD[2].equals(method)) {
+			if(options.contains("d") || this.listMethod[2].equals(method)) {
 				buildDateOptions(command, args[iterator++]);	
 			}
 			if(options.contains("n")) {
@@ -95,25 +99,21 @@ public class ArgumentParser {
 	 */
 	protected boolean correctOptions(String method, String[] options) {
 		if(options.length == 0) return false;
-		if(method.equals(METHOD[0]) 
+		if(method.equals(this.listMethod[0])
 			&& Arrays.asList(options).stream()
-			.anyMatch(o -> !String.join("",  LIST_OPTIONS).contains(o))
+			.anyMatch(o -> !String.join("", listOptions).contains(o))
 		) {
 			return false;
 		}
-		if(method.equals(METHOD[1]) 
+		if(method.equals(this.listMethod[1])
 			&& Arrays.asList(options).stream()
-			.anyMatch(o -> !String.join("",  DESC_OPTIONS).contains(o))
+			.anyMatch(o -> !String.join("", descOptions).contains(o))
 		) {
 			return false;
 		}
-		if(method.equals(METHOD[2]) 
-			&& Arrays.asList(options).stream()
-			.anyMatch(o -> !String.join("",  BOOK_OPTIONS).contains(o))
-		) {
-			return false;
-		}
-		return true;
+		return !method.equals(this.listMethod[2])
+				|| Arrays.asList(options).stream()
+				.noneMatch(o -> !String.join("", bookOptions).contains(o));
 	}
 
 	/**

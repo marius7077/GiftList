@@ -1,25 +1,26 @@
 package com.bookit.exception;
 
-import java.io.PrintStream;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ExceptionManager extends Exception {
-	
+
 	@Autowired
-	@Qualifier("error")
-	private PrintStream error;
-	
-	public void exceptionCtrl(CommandException e) {
-		if(e.getMethod() != null) error.println("Commande incorrecte. Entrez \"help " + e.getMethod() + "\" pour plus d'informations.");
-		else error.println("Commande incorrecte. Entrez \"help\" pour plus d'informations.\n");
-	}
-	
-	public void exceptionCtrl(UnfoundRoomException e) {
-		error.println("La salle \"" + e.getRoom() + "\" spécifiée n'existe pas. Affichez la liste des salles existantes avec \"list -a\"");
+	private Logger logger;
+
+	public void exceptionCtrl(Exception e) {
+		if(e instanceof CommandException){
+			CommandException ce = (CommandException) e;
+			if( ce.getMethod() != null) logger.log(
+					Level.SEVERE, "Commande incorrecte. Entrez \"help " + ce.getMethod() + "\" pour plus d'informations.");
+			else logger.log(Level.SEVERE, "Commande incorrecte. Entrez \"help\" pour plus d'informations.\n");
+		}
+		else if(e instanceof UnfoundRoomException){
+			UnfoundRoomException ure = (UnfoundRoomException) e;
+			logger.log(Level.SEVERE, "La salle \"" + ure.getRoom() + "\" spécifiée n'existe pas. Affichez la liste des salles existantes avec \"list -a\"");
+		}
 	}
 }

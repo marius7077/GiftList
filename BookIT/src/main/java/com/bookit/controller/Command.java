@@ -52,10 +52,12 @@ public class Command {
 	public boolean getClosedOption() { return this.closedOption; }
 	public void setClosedOption(boolean closed) { this.closedOption = closed; }
 	public boolean getITOption() { return this.itOption; }
-	public void setITOption(boolean it) { this.itOption = it; };
-	public boolean getPrivateOption() { return this.privateOption; }
-	public void setPrivateOption(boolean priv) { this.privateOption = priv; };
-	public long getStartDate() { return this.startDate; }
+	public void setITOption(boolean it) { this.itOption = it; }
+
+  public boolean getPrivateOption() { return this.privateOption; }
+	public void setPrivateOption(boolean priv) { this.privateOption = priv; }
+
+  public long getStartDate() { return this.startDate; }
 	public void setStartDate(Long start) { this.startDate = start; }
 	public long getEndDate() { return this.endDate; }	
 	public void setEndDate(Long end) { this.endDate = end; }

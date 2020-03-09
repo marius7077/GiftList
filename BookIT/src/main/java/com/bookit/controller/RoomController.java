@@ -1,15 +1,13 @@
 package com.bookit.controller;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-
 import com.bookit.exception.UnfoundRoomException;
 import com.bookit.model.Book;
 import com.bookit.model.Room;
 import com.bookit.service.JSONManager;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 @Controller
 public class RoomController {
@@ -49,10 +47,8 @@ public class RoomController {
 					command.getStartDate(), 
 					command.getEndDate()
 			);
-			
-			if(!booksInInterval.isEmpty()) {
-				return false;
-			}
+
+      return booksInInterval.isEmpty();
 		}
 		return true;
 	}
@@ -109,12 +105,10 @@ public class RoomController {
 		if(!room.getBookList().isEmpty()) {
 			List<Book> booksInInterval = bookCtrl.getBooksInInterval(room, start, end);
 			if(!booksInInterval.isEmpty()) {
-				if(booksInInterval.stream().filter(b -> b.isPriv()).findFirst().isPresent()) {
+				if(booksInInterval.stream().anyMatch(Book::isPriv)) {
 					return false;
 				}
-				if(closed) {
-					return false;
-				}
+        return !closed;
 			}
 		}
 		return true;
@@ -141,7 +135,7 @@ public class RoomController {
 	public boolean isBooked(Room room, long start) {
 		if(!room.getBookList().isEmpty()) {
 			List<Book> booksInInterval = bookCtrl.getBooksInInterval(room, start, start + 1);
-			if(!booksInInterval.isEmpty()) return true;
+      return !booksInInterval.isEmpty();
 		}
 		return false;
 	}

@@ -1,10 +1,9 @@
 package com.bookit.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-
 import com.bookit.model.User;
 import com.bookit.service.JSONManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 @Controller
 public class UserController {

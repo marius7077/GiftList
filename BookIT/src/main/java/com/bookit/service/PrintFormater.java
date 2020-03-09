@@ -1,21 +1,19 @@
 package com.bookit.service;
 
-import java.text.DateFormat;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.bookit.controller.Command;
 import com.bookit.controller.RoomController;
 import com.bookit.model.Book;
 import com.bookit.model.Room;
+import java.text.DateFormat;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class PrintFormater {
 	
 	@Autowired
 	private DateFormat df;
-	
+
 	@Autowired
 	private RoomController roomCtrl;
 
@@ -33,7 +31,7 @@ public class PrintFormater {
 		displayRoom += " (" + room.getCapacity() + " places) - ";
 		displayRoom += (room.isItroom() ? "salle informatique" : "salle de cours");
 		displayRoom += " : " + getState(room, command);
-		
+
 		return displayRoom;
 	}
 
@@ -76,7 +74,11 @@ public class PrintFormater {
 		long end = command.getEndDate();
 		boolean available = roomCtrl.isAccessible(r, start, end, false);
 		boolean opened = roomCtrl.isBooked(r, start);
-		return available ? opened ? "ouverte" : "libre" : "occupée";
+		if(available) {
+				if(opened) return "ouverte";
+				else return "libre";
+		}
+		else return "occupée";
 	}
 
 	/**

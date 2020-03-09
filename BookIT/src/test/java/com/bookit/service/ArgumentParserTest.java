@@ -23,6 +23,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import com.bookit.controller.Command;
 import com.bookit.controller.RoomController;
@@ -55,6 +56,11 @@ public class ArgumentParserTest {
 	@Before
 	public void setUp() throws UnfoundRoomException, ParseException {
 		MockitoAnnotations.initMocks(this);
+		ReflectionTestUtils.setField(parser, "listMethod", "list,describe,book".split(","));
+		ReflectionTestUtils.setField(parser, "listOptions", "a,c,i,d,n".split(","));
+		ReflectionTestUtils.setField(parser, "descOptions", "a,d".split(","));
+		ReflectionTestUtils.setField(parser, "bookOptions", "p".split(","));
+		ReflectionTestUtils.setField(parser, "help", "help");
 		
 		when(roomCtrl.getRoomByName(anyString())).thenReturn(r1);
 	}

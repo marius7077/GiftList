@@ -1,12 +1,10 @@
 package com.bookit.controller;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Controller;
-
 import com.bookit.model.Book;
 import com.bookit.model.Room;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.stereotype.Controller;
 
 @Controller
 public class BookController {
@@ -44,8 +42,9 @@ public class BookController {
 	 * @return boolean : True if an intersection exists, false if not
 	 */
 	public boolean inInterval(Book book, Long startDate, Long endDate) {
-		if(book.getStartDate() >= startDate && book.getStartDate() < endDate) return true;
-		if(startDate >= book.getStartDate() && startDate < book.getEndDate()) return true;
-		return false;
-	}
+		if(book.getStartDate() >= startDate && book.getStartDate() < endDate) {
+			return true;
+		}
+    return startDate >= book.getStartDate() && startDate < book.getEndDate();
+  }
 }
